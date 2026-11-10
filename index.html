@@ -3,409 +3,339 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#f8f6f2">
 <title>bokchoycavitch.</title>
 <style>
 :root{
-  --bg:#f8f6f2;
-  --paper:#ffffff;
-  --ink:#40382f;
-  --muted:#a19082;
-  --line:#e9e2da;
-  --soft:#f7f5f2;
-  --selected:#eae1d8;
-  --brown:#665346;
+ --bg:#f8f6f2;--paper:#fff;--ink:#40382f;
+ --muted:#9b897a;--line:#e9e2da;--soft:#f5f2ee;
+ --selected:#eae1d8;--brown:#665346;--danger:#a15c55;
 }
 *{box-sizing:border-box}
-body{
-  margin:0;background:var(--bg);color:var(--ink);
-  font:13px/1.6 -apple-system,BlinkMacSystemFont,
-  "Segoe UI",sans-serif;
-}
+body{margin:0;background:var(--bg);color:var(--ink);
+ font:13px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 button,input,textarea,select{font:inherit}
 button{cursor:pointer}
-button:disabled{opacity:.55;cursor:wait}
-h1,h2,h3{font-family:Georgia,serif;font-weight:400}
-h1{font-size:19px;font-style:italic;font-weight:600;margin:0}
-h2{font-size:23px;font-style:italic;font-weight:600;margin:0}
-h3{font-size:15px;font-family:inherit;font-weight:500;margin:0}
+button:disabled{opacity:.5;cursor:wait}
+h1,h2,h3{margin:0;font-weight:400}
+h1,h2{font-family:Georgia,serif}
+h1{font-size:20px;font-style:italic;font-weight:600}
+h2{font-size:26px;font-style:italic;font-weight:600}
+h3{font-size:15px;font-weight:600}
 p{margin:8px 0}
 a{color:var(--brown)}
-.shell{max-width:820px;margin:32px auto;padding:0 13px}
-.top{display:flex;justify-content:space-between;align-items:center}
-.eyebrow{
-  font-size:10px;letter-spacing:.65px;
-  text-transform:uppercase;color:var(--muted)
-}
+.shell{width:100%;max-width:1600px;margin:auto;padding:25px 38px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.eyebrow{font-size:10px;letter-spacing:.8px;text-transform:uppercase;color:var(--muted)}
 .muted{color:var(--muted)}
 .small{font-size:11px}
-.logo{line-height:1.4}
-nav{
-  display:flex;gap:18px;margin-top:17px;
-  border-bottom:1px solid var(--line);
-  padding-bottom:18px;
-}
-nav button{
-  border:0;background:none;padding:0;
-  color:var(--muted);font-size:13px
-}
-nav button.active{color:var(--ink);font-weight:600}
-nav button:hover{color:var(--brown)}
-.iconbtn{
-  display:inline-flex;align-items:center;justify-content:center;
-  border:1px solid var(--line);border-radius:12px;
-  width:37px;height:37px;background:white;color:var(--brown);
-}
-.iconbtn svg{width:17px;height:17px;stroke:currentColor;
-  fill:none;stroke-width:1.6;stroke-linecap:round;
-  stroke-linejoin:round}
-.iconbtn:hover,.btn:hover{background:var(--soft)}
-.card{
-  background:var(--paper);border:1px solid var(--line);
-  border-radius:15px;padding:13px;margin-top:13px;
-}
 .hidden{display:none!important}
 .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .between{justify-content:space-between}
-.btn{
-  background:white;color:var(--brown);border:1px solid var(--line);
-  border-radius:9px;padding:8px 12px;
-}
-.btn.primary{background:var(--brown);color:white;border-color:var(--brown)}
-input,textarea,select{
-  display:block;width:100%;border:1px solid var(--line);
-  background:white;border-radius:9px;padding:10px;
-  color:var(--ink);outline-color:var(--muted);
-}
-textarea{min-height:90px;resize:vertical}
-label{display:block;color:var(--muted);font-size:11px;margin:12px 0}
+nav{display:flex;gap:25px;border-bottom:1px solid var(--line);
+ padding:18px 0;margin-bottom:26px;flex-wrap:wrap}
+nav button{border:0;background:none;color:var(--muted);padding:0}
+nav button.active{color:var(--ink);font-weight:600}
+nav button:hover{color:var(--brown)}
+.btn{border:1px solid var(--line);background:white;color:var(--brown);
+ border-radius:9px;padding:9px 13px}
+.btn.primary{background:var(--brown);border-color:var(--brown);color:white}
+.btn.danger{color:var(--danger)}
+.btn:hover{filter:brightness(.97)}
+.iconbtn{width:37px;height:37px;border:1px solid var(--line);
+ border-radius:11px;background:white;color:var(--brown);
+ display:inline-flex;align-items:center;justify-content:center}
+.iconbtn svg{width:18px;height:18px;fill:none;stroke:currentColor;
+ stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.card{background:var(--paper);border:1px solid var(--line);
+ border-radius:15px;padding:19px;margin-bottom:15px;min-width:0}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:15px}
+.collection{cursor:pointer;min-height:145px;transition:transform .15s}
+.collection:hover{transform:translateY(-2px);border-color:#cdbdad}
+.collection .symbol{font-size:23px;margin-bottom:17px}
+input,textarea,select{width:100%;padding:10px 12px;border:1px solid var(--line);
+ background:white;border-radius:9px;color:var(--ink)}
+input[type=checkbox]{width:auto}
+textarea{min-height:85px;resize:vertical}
+label{display:block;font-size:11px;color:var(--muted);margin:12px 0}
 label input,label textarea,label select{margin-top:5px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.week{
-  display:grid;grid-template-columns:repeat(7,minmax(0,1fr));
-  gap:4px;margin-top:10px;
-}
-.weekday{text-align:center;color:var(--muted);font-size:10px;
-  padding-bottom:4px}
-.day{
-  background:var(--soft);border-radius:9px;
-  min-height:52px;text-align:center;padding:10px 3px;
-  font-size:13px;overflow-wrap:anywhere;
-}
+.pagehead{margin-bottom:22px}
+.pagehead h2{margin:5px 0}
+.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin-top:14px}
+.weekday{text-align:center;color:var(--muted);font-size:10px}
+.day{background:var(--soft);border-radius:9px;min-height:67px;
+ padding:11px 4px;text-align:center;overflow-wrap:anywhere}
 .day.today{background:var(--selected)}
-.eventdot{
-  width:4px;height:4px;border-radius:50%;
-  background:#a58b77;margin:5px auto 0;
-}
-.eventname{font-size:9px;color:var(--brown);line-height:1.3;
-  margin-top:5px}
-.sectionhead{margin:28px 0 12px}
-.entry{border-bottom:1px solid var(--line);padding:12px 0}
+.eventdot{width:5px;height:5px;border-radius:50%;background:#a68d78;margin:6px auto}
+.eventname{font-size:10px;line-height:1.3;margin-top:4px}
+.entry{padding:13px 0;border-bottom:1px solid var(--line)}
 .entry:last-child{border:0}
-.entry strong{font-weight:500}
-.checkrow{display:flex;gap:9px;align-items:center;padding:9px 0;
-  border-bottom:1px solid var(--line)}
-.checkrow input{width:auto}
+.entry.clickable{cursor:pointer}
+.entry.clickable:hover{background:#fcfaf7}
+.checkrow{display:flex;gap:9px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
 .checkrow span{flex:1}
 .done{text-decoration:line-through;color:var(--muted)}
-.amount{font-family:Georgia,serif;font-size:26px}
 .content{white-space:pre-wrap;line-height:1.85}
-#notice{
-  position:fixed;bottom:20px;right:20px;
-  background:var(--ink);color:white;
-  padding:12px 16px;border-radius:10px;
-  display:none;max-width:calc(100vw - 40px);z-index:20;
+.money-layout{display:grid;grid-template-columns:270px minmax(0,1fr);gap:18px;align-items:start}
+.account-card{border:1px solid var(--line);border-radius:11px;
+ padding:13px;margin-top:10px;background:#fcfbf9}
+.account-card .balance{font-family:Georgia,serif;font-size:22px;margin:4px 0}
+.account-card .account-top{display:flex;justify-content:space-between;gap:8px}
+.amount{font-family:Georgia,serif;font-size:25px}
+.detail{background:var(--soft);padding:16px;border-radius:11px;margin-top:15px}
+.detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.chip{display:inline-block;background:var(--soft);border-radius:30px;
+ padding:4px 9px;font-size:11px;color:var(--brown)}
+#notice{position:fixed;bottom:20px;right:20px;background:var(--ink);
+ color:white;padding:12px 16px;border-radius:10px;display:none;z-index:20}
+#auth{max-width:420px;margin:75px auto}
+#auth .card{padding:28px}
+#dialogShade{position:fixed;inset:0;background:#30271f88;z-index:30;
+ display:flex;align-items:center;justify-content:center;padding:16px}
+#dialog{background:white;border-radius:16px;padding:23px;
+ width:min(100%,570px);max-height:90vh;overflow:auto}
+#dialog h3{font-family:Georgia,serif;font-size:22px;margin-bottom:10px}
+footer{margin:28px 0;color:var(--muted);font-size:11px}
+@media(max-width:900px){
+ .shell{padding:20px}
+ .money-layout{grid-template-columns:1fr}
+ .account-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .account-card{margin:0}
 }
-#auth{max-width:400px;margin:60px auto}
-#auth .card{padding:25px}
-details{margin-top:12px}
-summary{cursor:pointer;color:var(--brown)}
-.pagehead{margin:25px 0 16px}
-.pagehead h2{margin-top:5px}
-.linkbtn{
-  border:0;background:none;color:var(--brown);
-  font-size:11px;padding:0
-}
-footer{margin-top:30px;color:var(--muted);font-size:10px}
 @media(max-width:600px){
-  .shell{margin:12px auto;padding:0 12px}
-  .grid{grid-template-columns:1fr}
-  .day{min-height:47px;padding:9px 2px}
-  nav{gap:16px}
+ .shell{padding:14px}
+ .grid,.detail-grid{grid-template-columns:1fr}
+ .cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .collection{min-height:125px;padding:14px}
+ .account-list{grid-template-columns:1fr 1fr}
+ .account-card{padding:10px}
+ .account-card .balance{font-size:17px}
+ nav{gap:16px}
+ .day{min-height:51px;padding:7px 2px}
+ .eventname{font-size:9px}
+}
+@media(max-width:390px){
+ .cards{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 <div class="shell">
 <header class="top">
-  <div class="logo">
-    <div class="eyebrow">YOUR LITTLE CORNER OF THE INTERNET</div>
-    <h1>bokchoycavitch.</h1>
-  </div>
+ <div>
+  <div class="eyebrow">YOUR LITTLE CORNER OF THE INTERNET</div>
+  <h1>bokchoycavitch.</h1>
+ </div>
+ <div class="row">
+  <button class="iconbtn hidden" id="homeIcon" title="Home">⌂</button>
   <button class="iconbtn hidden" id="settingsIcon" title="Settings">
-    <svg viewBox="0 0 24 24">
-      <path d="M4 7h16M4 17h16M9 4v6M15 14v6"/>
-      <circle cx="9" cy="7" r="2" fill="#f8f6f2"/>
-      <circle cx="15" cy="17" r="2" fill="#f8f6f2"/>
-    </svg>
+   <svg viewBox="0 0 24 24">
+    <path d="M4 7h16M4 17h16M9 4v6M15 14v6"/>
+    <circle cx="9" cy="7" r="2"/><circle cx="15" cy="17" r="2"/>
+   </svg>
   </button>
+ </div>
 </header>
 
 <section id="auth">
-  <div class="card">
-    <div class="eyebrow">WELCOME HOME</div>
-    <h2 style="margin-top:10px">Your personal space.</h2>
-    <p class="muted">Sign in to keep your little corner of the internet in sync.</p>
-    <form id="authForm">
-      <label>Email<input id="authEmail" type="email"
-        autocomplete="email" required></label>
-      <label>Password<input id="authPassword" type="password"
-        minlength="6" autocomplete="current-password" required></label>
-      <div class="row">
-        <button class="btn primary" type="submit" id="loginButton">Sign in</button>
-        <button class="btn" type="button" id="signupButton">Create account</button>
-      </div>
-    </form>
-    <p class="small muted" id="authMessage"></p>
-  </div>
+ <div class="card">
+  <div class="eyebrow">WELCOME HOME</div>
+  <h2>Your personal space.</h2>
+  <p class="muted">Sign in to keep everything together across your devices.</p>
+  <form id="authForm">
+   <label>Email<input id="authEmail" type="email" autocomplete="email" required></label>
+   <label>Password<input id="authPassword" type="password" minlength="6"
+    autocomplete="current-password" required></label>
+   <div class="row">
+    <button class="btn primary" type="submit">Sign in</button>
+    <button class="btn" type="button" id="signupButton">Create account</button>
+   </div>
+  </form>
+  <p class="muted small" id="authMessage"></p>
+ </div>
 </section>
 
 <div id="workspace" class="hidden">
 <nav id="nav">
-  <button data-page="home" class="active">Today</button>
-  <button data-page="calendar">Calendar</button>
-  <button data-page="things">My things</button>
+ <button data-page="home" class="active">Home</button>
+ <button data-page="calendar">Calendar</button>
+ <button data-page="things">My things</button>
+ <button data-page="money">Money</button>
 </nav>
 <main>
 <section id="home">
-  <div class="pagehead">
-    <div class="eyebrow" id="todayLabel"></div>
-    <h2 id="greeting">Good evening.</h2>
+ <div class="pagehead">
+  <div class="eyebrow" id="todayLabel"></div>
+  <h2 id="greeting">Good evening.</h2>
+ </div>
+ <div class="card">
+  <div class="row between">
+   <h3>Your week</h3>
+   <button class="btn" data-go="calendar">Calendar ↗</button>
   </div>
-
-  <div class="card">
-    <div class="row between">
-      <h3>Your week</h3>
-      <button class="linkbtn" data-go="calendar" title="Open calendar">
-        <svg width="17" height="17" viewBox="0 0 24 24"
-          fill="none" stroke="currentColor" stroke-width="1.6">
-          <rect x="3" y="5" width="18" height="16" rx="2"/>
-          <path d="M7 3v4M17 3v4M3 10h18"/>
-        </svg>
-      </button>
-    </div>
-    <div class="week" id="homeWeek"></div>
+  <div class="week" id="homeWeek"></div>
+ </div>
+ <div class="card">
+  <div class="eyebrow">A LITTLE SOMETHING FOR YOU</div>
+  <h3 style="margin-top:8px">Feeling creative?</h3>
+  <p id="homePrompt" style="font:italic 16px Georgia,serif;color:#7b6a5c"></p>
+  <div class="row between">
+   <span class="muted small">Just for fun. No deadlines, no streaks.</span>
+   <button class="btn" id="tryPrompt">Try this prompt →</button>
   </div>
-
-  <div class="card">
-    <div class="row between">
-      <div class="eyebrow">A LITTLE SOMETHING FOR YOU</div>
-      <span class="muted" style="font-size:19px">♧</span>
-    </div>
-    <h3 style="margin:5px 0 10px">Feeling creative?</h3>
-    <p id="homePrompt" style="font-family:Georgia,serif;
-      font-style:italic;font-size:15px;color:#7b6a5c"></p>
-    <p class="muted small">Just for fun. No deadlines, no streaks.</p>
-    <div style="text-align:right">
-      <button class="linkbtn" id="tryPrompt">Try this prompt →</button>
-    </div>
+ </div>
+ <div class="row between" style="margin-top:16px">
+  <span>Your private things</span>
+  <div class="row">
+   <button class="iconbtn" data-go="money" title="Money">▣</button>
+   <button class="iconbtn" data-go="writing" title="Writing">▤</button>
+   <button class="iconbtn" data-go="things" title="Lists">☷</button>
   </div>
-
-  <div class="row between" style="margin-top:14px">
-    <span style="font-size:13px;color:#74665b">Your private things</span>
-    <div class="row">
-      <button class="iconbtn" id="homeSpending" title="Spending journal">
-        <svg viewBox="0 0 24 24">
-          <rect x="4" y="3" width="16" height="18" rx="2"/>
-          <path d="M8 8h8M8 12h5M15 15h6v5h-6z"/>
-        </svg>
-      </button>
-      <button class="iconbtn" id="homeWriting" title="Writing archive">
-        <svg viewBox="0 0 24 24">
-          <path d="M12 5c-3-2-6-2-9-1v15c3-1 6-1 9 1
-            3-2 6-2 9-1V4c-3-1-6-1-9 1zM12 5v15"/>
-        </svg>
-      </button>
-      <button class="iconbtn" data-go="things" title="My lists">
-        <svg viewBox="0 0 24 24">
-          <path d="M9 6h12M9 12h12M9 18h12M4 6h1M4 12h1M4 18h1"/>
-        </svg>
-      </button>
-    </div>
-  </div>
-  <footer>Made for the little things that make up a life.</footer>
+ </div>
+ <footer>A little place for everything.</footer>
 </section>
 
 <section id="calendar" class="hidden">
-  <div class="pagehead">
-    <div class="eyebrow">YOUR DAYS</div>
-    <h2>Calendar</h2>
+ <div class="pagehead"><div class="eyebrow">YOUR DAYS</div><h2>Calendar</h2></div>
+ <div class="card">
+  <div class="row between">
+   <button class="btn" id="prevWeek">←</button>
+   <h3 id="weekTitle"></h3>
+   <button class="btn" id="nextWeek">→</button>
   </div>
-  <div class="card">
-    <div class="row between">
-      <button class="btn" id="prevWeek">←</button>
-      <h3 id="weekTitle"></h3>
-      <button class="btn" id="nextWeek">→</button>
-    </div>
-    <div class="week" id="calendarWeek"></div>
-  </div>
-  <div class="card">
-    <h3>Add an occasion</h3>
-    <form id="eventForm">
-      <label>Name<input id="eventName" required></label>
-      <label>Date<input id="eventDate" type="date" required></label>
-      <label>Type<select id="eventType">
-        <option value="other">Event</option>
-        <option value="birthday">Birthday</option>
-      </select></label>
-      <button class="btn primary">Save event</button>
-    </form>
-    <div id="eventList"></div>
-  </div>
-  <div class="card">
-    <h3>iCloud Calendar</h3>
-    <p class="muted">Live iCloud syncing isn't connected yet.
-      You can import a calendar file as a snapshot.</p>
-    <label>Import .ics file
-      <input type="file" id="icsFile" accept=".ics,text/calendar">
-    </label>
-    <p class="small muted">Imported events save to your account,
-      but don't automatically update from iCloud.</p>
-  </div>
+  <div class="week" id="calendarWeek"></div>
+ </div>
+ <div class="card">
+  <h3>Add an occasion</h3>
+  <form id="eventForm">
+   <label>Name<input id="eventName" required></label>
+   <label>Date<input id="eventDate" type="date" required></label>
+   <label>Type<select id="eventType">
+    <option value="other">Event</option><option value="birthday">Birthday</option>
+   </select></label>
+   <button class="btn primary">Save event</button>
+  </form>
+  <div id="eventList"></div>
+ </div>
+ <div class="card">
+  <h3>iCloud Calendar</h3>
+  <p class="muted">Live iCloud syncing is not connected yet. You can import a calendar snapshot.</p>
+  <label>Import .ics file<input type="file" id="icsFile" accept=".ics,text/calendar"></label>
+ </div>
 </section>
 
 <section id="things" class="hidden">
-  <div class="pagehead">
-    <div class="eyebrow">A PLACE FOR EVERYTHING</div>
-    <h2>My things</h2>
-    <p class="muted">Lists, wishes, saved finds, and little ideas.</p>
-  </div>
-  <div class="grid">
-    <div class="card">
-      <h3>Your lists</h3>
-      <form id="listForm" class="row" style="margin-top:13px">
-        <input id="listTitle" placeholder="New list name"
-          style="flex:1;min-width:130px" required>
-        <button class="btn primary">Create</button>
-      </form>
-      <div id="listsMenu"></div>
-    </div>
-    <div class="card" id="listDetail">
-      <h3>Select a list</h3>
-    </div>
-  </div>
-  <div class="card">
-    <h3>Saved finds</h3>
-    <form id="savedForm">
-      <label>Title<input id="savedTitle" required
-        placeholder="Something you want to remember"></label>
-      <label>Link (optional)
-        <input id="savedUrl" type="url" placeholder="https://..."></label>
-      <label>Note (optional)
-        <textarea id="savedNote"></textarea></label>
-      <button class="btn primary">Save this</button>
-    </form>
-    <div id="savedList"></div>
-  </div>
+ <div class="pagehead">
+  <div class="eyebrow">YOUR COLLECTIONS</div>
+  <h2>My things</h2>
+  <p class="muted">A home for lists, wishes, saved links, and little ideas.</p>
+ </div>
+ <div class="row between" style="margin-bottom:16px">
+  <h3>Collections</h3>
+  <button class="btn primary" id="newListButton">+ New list</button>
+ </div>
+ <div class="cards" id="collectionCards"></div>
+ <div class="card hidden" id="listDetail"></div>
+ <div class="card">
+  <div class="row between"><h3>Saved finds</h3><span class="chip">Links & ideas</span></div>
+  <form id="savedForm">
+   <div class="grid">
+    <label>Title<input id="savedTitle" required></label>
+    <label>Link (optional)<input id="savedUrl" type="url" placeholder="https://..."></label>
+   </div>
+   <label>Notes<textarea id="savedNote"></textarea></label>
+   <button class="btn primary">Save this</button>
+  </form>
+  <div id="savedList"></div>
+ </div>
 </section>
 
-<section id="spending" class="hidden">
-  <div class="pagehead">
-    <div class="eyebrow">PRIVATE · FOR YOUR EYES ONLY</div>
-    <h2>Spending journal</h2>
-    <p class="muted">A gentle look at what you've spent and why.</p>
-  </div>
-  <div class="card">
+<section id="money" class="hidden">
+ <div class="pagehead">
+  <div class="eyebrow">PRIVATE · YOUR MONEY</div>
+  <h2>Your money.</h2>
+  <p class="muted">Accounts, paydays, purchases, and the little details behind them.</p>
+ </div>
+ <div class="money-layout">
+  <aside>
+   <div class="card">
     <div class="row between">
-      <div>
-        <div class="eyebrow" id="spendingWeek"></div>
-        <h3 style="margin-top:5px">This week</h3>
-      </div>
-      <button class="btn" id="toggleAmounts">Show amounts</button>
+     <h3>Accounts</h3>
+     <button class="btn" id="addAccountButton">+ Add</button>
     </div>
-    <div class="amount" id="weekTotal" style="margin-top:10px">••••••</div>
-    <p class="muted small" id="spendingInsight"></p>
+    <p class="muted small">Credit cards show the amount you owe.</p>
+    <div class="account-list" id="accountList"></div>
+    <div class="row" style="margin-top:13px">
+     <button class="btn" id="toggleBalances">Show balances</button>
+    </div>
+   </div>
+  </aside>
+  <div>
+   <div class="card">
+    <div class="row between">
+     <div>
+      <div class="eyebrow">YOUR ACTIVITY</div>
+      <h3 style="margin-top:5px">Transactions</h3>
+     </div>
+     <button class="btn primary" id="newTransactionButton">+ Transaction</button>
+    </div>
+    <p class="muted small">Click a transaction to see its notes and details.</p>
+    <div id="transactionList"></div>
+   </div>
+   <div class="card hidden" id="transactionDetail"></div>
   </div>
-  <div class="card">
-    <h3>Record a purchase</h3>
-    <form id="spendingForm">
-      <div class="grid">
-        <label>Amount<input id="purchaseAmount" type="number"
-          min=".01" step=".01" required></label>
-        <label>Date<input id="purchaseDate" type="date" required></label>
-      </div>
-      <label>What did you buy?<input id="purchaseName" required></label>
-      <label>Category<select id="purchaseCategory">
-        <option>Food & drinks</option><option>Groceries</option>
-        <option>Shopping</option><option>Bills</option>
-        <option>Transportation</option><option>Gifts</option>
-        <option>Health</option><option>Entertainment</option>
-        <option>Other</option>
-      </select></label>
-      <label>Why?<select id="purchaseReason">
-        <option>Needed it</option><option>Wanted it</option>
-        <option>Convenience</option><option>Impulse</option>
-        <option>Treat</option><option>Other</option>
-      </select></label>
-      <label>Notes (optional)<textarea id="purchaseNote"></textarea></label>
-      <button class="btn primary">Save purchase</button>
-    </form>
-  </div>
-  <div class="card">
-    <h3>Purchase history</h3>
-    <div id="purchaseHistory"></div>
-  </div>
+ </div>
 </section>
 
 <section id="writing" class="hidden">
-  <div class="pagehead">
-    <div class="eyebrow">JUST FOR YOU</div>
-    <h2>A little writing</h2>
+ <div class="pagehead"><div class="eyebrow">JUST FOR YOU</div><h2>A little writing</h2></div>
+ <div class="card" id="writingLanding">
+  <p id="writingPrompt" style="font:italic 17px Georgia,serif"></p>
+  <div class="row">
+   <button class="btn primary" id="startWriting">Start writing</button>
+   <button class="btn" id="changePrompt">Another prompt</button>
   </div>
-  <div id="writingLanding" class="card">
-    <p id="writingPrompt" style="font-family:Georgia,serif;
-      font-size:17px;font-style:italic"></p>
-    <div class="row">
-      <button class="btn primary" id="startWriting">Start writing</button>
-      <button class="btn" id="changePrompt">Another prompt</button>
-    </div>
-    <hr style="border:0;border-top:1px solid var(--line);margin:20px 0">
-    <h3>Your archive</h3>
-    <div id="storyArchive"></div>
+  <hr style="border:0;border-top:1px solid var(--line);margin:20px 0">
+  <h3>Your archive</h3>
+  <div id="storyArchive"></div>
+ </div>
+ <div class="card hidden" id="writingEditor">
+  <p class="muted" id="editorPrompt"></p>
+  <label>Title<input id="storyTitle"></label>
+  <label>Your story<textarea id="storyBody" style="min-height:340px"></textarea></label>
+  <p class="small muted" id="storyStatus"></p>
+  <div class="row">
+   <button class="btn primary" id="saveStory">Save story</button>
+   <button class="btn" id="closeStory">Back to archive</button>
   </div>
-  <div id="writingEditor" class="card hidden">
-    <p class="muted" id="editorPrompt"></p>
-    <label>Title<input id="storyTitle" placeholder="Untitled"></label>
-    <label>Your story<textarea id="storyBody"
-      style="min-height:330px"></textarea></label>
-    <p class="small muted" id="storyStatus">Not saved yet</p>
-    <div class="row">
-      <button class="btn primary" id="saveStory">Save story</button>
-      <button class="btn" id="closeStory">Back to archive</button>
-    </div>
-  </div>
+ </div>
 </section>
 
 <section id="settings" class="hidden">
-  <div class="pagehead">
-    <div class="eyebrow">YOUR SPACE</div>
-    <h2>Settings</h2>
-  </div>
-  <div class="card">
-    <h3>Your account</h3>
-    <p id="settingsEmail" class="muted"></p>
-    <button class="btn" id="signOut">Sign out</button>
-  </div>
-  <div class="card">
-    <h3>Your data</h3>
-    <p class="muted">Your lists and records are stored in
-      Supabase and can sync across your signed-in devices.</p>
-    <button class="btn" id="exportAll">Export my data</button>
-  </div>
+ <div class="pagehead"><div class="eyebrow">YOUR SPACE</div><h2>Settings</h2></div>
+ <div class="card">
+  <h3>Account</h3>
+  <p id="settingsEmail" class="muted"></p>
+  <button class="btn" id="signOut">Sign out</button>
+ </div>
+ <div class="card">
+  <h3>Privacy</h3>
+  <p class="muted">Your financial balances are hidden by default whenever you open this website.</p>
+ </div>
+ <div class="card">
+  <h3>Your data</h3>
+  <p class="muted">Export your cloud records as an additional backup.</p>
+  <button class="btn" id="exportAll">Export my data</button>
+ </div>
 </section>
 </main>
 </div>
+</div>
+
+<div id="dialogShade" class="hidden">
+ <div id="dialog" role="dialog" aria-modal="true"></div>
 </div>
 <div id="notice" role="status"></div>
 
@@ -414,551 +344,761 @@ import {createClient} from
 "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
 const sb=createClient(
-  "https://sgajmzpxfxqpaasgmuwk.supabase.co",
-  "sb_publishable_rbzoxQ6vZKkRtdDMKxuGpw_aubRqn63"
+ "https://sgajmzpxfxqpaasgmuwk.supabase.co",
+ "sb_publishable_rbzoxQ6vZKkRtdDMKxuGpw_aubRqn63"
 );
 const $=id=>document.getElementById(id);
 const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({
-  "&":"&amp;","<":"&lt;",">":"&gt;",
-  '"':"&quot;","'":"&#39;"
+ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
 }[c]));
-const money=n=>Number(n||0).toLocaleString("en-US",
-  {style:"currency",currency:"USD"});
-const localDate=d=>{
-  const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,"0");
-  return `${y}-${m}-${String(d.getDate()).padStart(2,"0")}`;
-};
+const cash=n=>Number(n||0).toLocaleString("en-US",{
+ style:"currency",currency:"USD"
+});
+const localDate=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
 const today=()=>localDate(new Date());
 const monday=d=>{
-  const x=new Date(d.getFullYear(),d.getMonth(),d.getDate());
-  x.setDate(x.getDate()-(x.getDay()+6)%7);return x;
+ const x=new Date(d.getFullYear(),d.getMonth(),d.getDate());
+ x.setDate(x.getDate()-(x.getDay()+6)%7);return x;
 };
 const plusDays=(d,n)=>{
-  const x=new Date(d);x.setDate(x.getDate()+n);return x;
+ const x=new Date(d);x.setDate(x.getDate()+n);return x;
 };
 const prompts=[
-  "Write about a conversation you overheard that changed everything.",
-  "Two strangers recognize each other but neither remembers why.",
-  "A letter arrives for someone who hasn't lived here in years.",
-  "Someone finds something they thought was lost forever.",
-  "Write about a place that feels like home to everyone but its owner.",
-  "Two siblings remember the same childhood moment differently.",
-  "A missed train changes the course of an ordinary evening.",
-  "Describe a goodbye without using the word goodbye."
+ "Write about a conversation you overheard that changed everything.",
+ "Two strangers recognize each other but neither remembers why.",
+ "A letter arrives for someone who hasn't lived here in years.",
+ "Someone finds something they thought was lost forever.",
+ "Two siblings remember the same childhood moment differently.",
+ "A missed train changes an ordinary evening.",
+ "Describe a goodbye without using the word goodbye."
 ];
-let user=null,lists=[],records=[],activeList=null;
-let week=monday(new Date()),promptIndex=0;
-let selectedStory=null,amountsVisible=false;
+const categories=[
+ "Shopping","Groceries","Food & drinks","Bills","Transportation",
+ "Gifts","Health","Entertainment","Beauty","Home","Other"
+];
+const reasons=["Needed it","Wanted it","Treat","Convenience","Impulse","Other"];
+const feelings=["Happy","Good","Neutral","Excited","Stressed","Regretful","Other"];
+
+let user=null,lists=[],records=[],accounts=[],transactions=[];
+let activeList=null,selectedTransaction=null,selectedStory=null;
+let week=monday(new Date()),promptIndex=0,balancesVisible=false;
 let sessionVersion=0;
 
-function notice(message){
-  $("notice").textContent=message;
-  $("notice").style.display="block";
-  clearTimeout(window.noticeTimer);
-  window.noticeTimer=setTimeout(()=>
-    $("notice").style.display="none",3500);
+function notice(t){
+ $("notice").textContent=t;$("notice").style.display="block";
+ clearTimeout(window.noticeTimer);
+ window.noticeTimer=setTimeout(()=>$("notice").style.display="none",3500);
 }
-function busy(form,value){
-  form.querySelectorAll("button").forEach(b=>b.disabled=value);
+function busy(form,v){
+ form.querySelectorAll("button").forEach(b=>b.disabled=v);
 }
 function showPage(page){
-  document.querySelectorAll("main section").forEach(el=>
-    el.classList.toggle("hidden",el.id!==page));
-  document.querySelectorAll("#nav button").forEach(el=>
-    el.classList.toggle("active",el.dataset.page===page));
-  if(page==="home")renderHome();
-  if(page==="calendar")renderCalendar();
-  if(page==="things")renderThings();
-  if(page==="spending")renderSpending();
-  if(page==="writing")renderWriting();
-  window.scrollTo(0,0);
+ document.querySelectorAll("main section").forEach(el=>
+  el.classList.toggle("hidden",el.id!==page));
+ document.querySelectorAll("#nav button").forEach(el=>
+  el.classList.toggle("active",el.dataset.page===page));
+ renderAll();window.scrollTo(0,0);
 }
 document.querySelectorAll("[data-page]").forEach(b=>
-  b.onclick=()=>showPage(b.dataset.page));
+ b.onclick=()=>showPage(b.dataset.page));
 document.querySelectorAll("[data-go]").forEach(b=>
-  b.onclick=()=>showPage(b.dataset.go));
+ b.onclick=()=>showPage(b.dataset.go));
+$("homeIcon").onclick=()=>showPage("home");
 $("settingsIcon").onclick=()=>showPage("settings");
-$("homeSpending").onclick=()=>showPage("spending");
-$("homeWriting").onclick=()=>showPage("writing");
+
+function openDialog(html){
+ $("dialog").innerHTML=html;
+ $("dialogShade").classList.remove("hidden");
+}
+function closeDialog(){
+ $("dialogShade").classList.add("hidden");
+ $("dialog").innerHTML="";
+}
+$("dialogShade").onclick=e=>{
+ if(e.target===$("dialogShade"))closeDialog();
+};
+document.addEventListener("keydown",e=>{
+ if(e.key==="Escape")closeDialog();
+});
+const optionList=(arr,selected="")=>arr.map(v=>
+ `<option value="${esc(v)}" ${v===selected?"selected":""}>${esc(v)}</option>`
+).join("");
 
 async function loadData(){
-  if(!user)throw Error("Please sign in.");
-  const id=user.id;
-  const [a,b]=await Promise.all([
-    sb.from("lists").select("*").eq("user_id",id)
-      .order("created_at"),
-    sb.from("personal_records").select("*").eq("user_id",id)
-      .order("created_at")
-  ]);
-  if(a.error)throw a.error;
-  if(b.error)throw b.error;
-  return {lists:a.data||[],records:b.data||[]};
+ if(!user)throw Error("Please sign in.");
+ const id=user.id;
+ const results=await Promise.all([
+  sb.from("lists").select("*").eq("user_id",id).order("created_at"),
+  sb.from("personal_records").select("*").eq("user_id",id).order("created_at"),
+  sb.from("money_accounts").select("*").eq("user_id",id).order("created_at"),
+  sb.from("money_transactions").select("*").eq("user_id",id)
+   .order("transaction_date",{ascending:false})
+   .order("created_at",{ascending:false})
+ ]);
+ for(const r of results)if(r.error)throw r.error;
+ return results.map(r=>r.data||[]);
 }
 async function sync(){
-  const id=user?.id;
-  const result=await loadData();
-  if(user?.id!==id)return;
-  lists=result.lists;records=result.records;
-  renderAll();
+ const id=user?.id;
+ const result=await loadData();
+ if(user?.id!==id)return;
+ [lists,records,accounts,transactions]=result;
+ renderAll();
 }
-async function insertList(title){
-  const {error}=await sb.from("lists").insert({
-    user_id:user.id,title,items:[]
-  });
-  if(error)throw error;
-  await sync();
+async function write(table,values,id=null){
+ if(!user)throw Error("Please sign in.");
+ let q=id
+  ?sb.from(table).update({...values,updated_at:new Date().toISOString()})
+    .eq("id",id).eq("user_id",user.id)
+  :sb.from(table).insert({...values,user_id:user.id});
+ const {data,error}=await q.select("id").single();
+ if(error)throw error;
+ await sync();
+ return data.id;
 }
-async function updateList(id,changes){
-  const {error}=await sb.from("lists").update({
-    ...changes,updated_at:new Date().toISOString()
-  }).eq("id",id).eq("user_id",user.id);
-  if(error)throw error;
-  await sync();
-}
-async function deleteList(id){
-  const {error}=await sb.from("lists").delete()
-    .eq("id",id).eq("user_id",user.id);
-  if(error)throw error;
-  if(activeList===id)activeList=null;
-  await sync();
-}
-async function insertRecord(kind,data){
-  const {data:created,error}=await sb.from("personal_records")
-    .insert({user_id:user.id,kind,data}).select("id").single();
-  if(error)throw error;
-  await sync();
-  return created.id;
-}
-async function updateRecord(id,data){
-  const {error}=await sb.from("personal_records")
-    .update({data,updated_at:new Date().toISOString()})
-    .eq("id",id).eq("user_id",user.id);
-  if(error)throw error;
-  await sync();
-}
-async function deleteRecord(id){
-  const {error}=await sb.from("personal_records")
-    .delete().eq("id",id).eq("user_id",user.id);
-  if(error)throw error;
-  await sync();
+async function remove(table,id){
+ const {error}=await sb.from(table).delete()
+  .eq("id",id).eq("user_id",user.id);
+ if(error)throw error;
+ await sync();
 }
 const kind=k=>records.filter(r=>r.kind===k);
+
 function renderAll(){
-  renderHome();renderCalendar();renderThings();
-  renderSpending();renderWriting();
+ renderHome();renderCalendar();renderThings();
+ renderMoney();renderWriting();
 }
 async function session(nextUser){
-  const version=++sessionVersion;
-  user=nextUser;
-  lists=[];records=[];activeList=null;
-  $("auth").classList.toggle("hidden",!!user);
-  $("workspace").classList.toggle("hidden",!user);
-  $("settingsIcon").classList.toggle("hidden",!user);
-  if(!user)return;
-  $("settingsEmail").textContent=user.email||"";
-  try{
-    const data=await loadData();
-    if(version!==sessionVersion)return;
-    lists=data.lists;records=data.records;
-    renderAll();showPage("home");
-  }catch(e){notice("Cloud connection: "+e.message);}
+ const version=++sessionVersion;
+ user=nextUser;lists=[];records=[];accounts=[];transactions=[];
+ $("auth").classList.toggle("hidden",!!user);
+ $("workspace").classList.toggle("hidden",!user);
+ $("settingsIcon").classList.toggle("hidden",!user);
+ $("homeIcon").classList.toggle("hidden",!user);
+ if(!user)return;
+ $("settingsEmail").textContent=user.email||"";
+ try{
+  const result=await loadData();
+  if(version!==sessionVersion)return;
+  [lists,records,accounts,transactions]=result;
+  renderAll();showPage("home");
+ }catch(e){notice("Cloud connection: "+e.message);}
 }
 $("authForm").onsubmit=async e=>{
-  e.preventDefault();busy(e.target,true);
-  try{
-    const {data,error}=await sb.auth.signInWithPassword({
-      email:$("authEmail").value.trim(),
-      password:$("authPassword").value
-    });
-    if(error)throw error;
-    await session(data.user);
-  }catch(err){$("authMessage").textContent=err.message;}
-  finally{busy(e.target,false);}
+ e.preventDefault();busy(e.target,true);
+ try{
+  const {data,error}=await sb.auth.signInWithPassword({
+   email:$("authEmail").value.trim(),
+   password:$("authPassword").value
+  });
+  if(error)throw error;
+  await session(data.user);
+ }catch(err){$("authMessage").textContent=err.message;}
+ finally{busy(e.target,false);}
 };
 $("signupButton").onclick=async()=>{
-  const email=$("authEmail").value.trim();
-  const password=$("authPassword").value;
-  if(!email||password.length<6)
-    return notice("Enter an email and a password of at least 6 characters.");
-  $("signupButton").disabled=true;
-  try{
-    const {data,error}=await sb.auth.signUp({
-      email,password,options:{emailRedirectTo:location.origin}
-    });
-    if(error)throw error;
-    $("authMessage").textContent=data.session
-      ?"Account created.":"Check your email to confirm your account.";
-    if(data.session)await session(data.user);
-  }catch(e){$("authMessage").textContent=e.message;}
-  finally{$("signupButton").disabled=false;}
+ const email=$("authEmail").value.trim(),password=$("authPassword").value;
+ if(!email||password.length<6)
+  return notice("Enter an email and a password of at least 6 characters.");
+ $("signupButton").disabled=true;
+ try{
+  const {data,error}=await sb.auth.signUp({
+   email,password,options:{emailRedirectTo:location.origin}
+  });
+  if(error)throw error;
+  $("authMessage").textContent=data.session
+   ?"Account created.":"Check your email to confirm your account.";
+  if(data.session)await session(data.user);
+ }catch(e){$("authMessage").textContent=e.message;}
+ finally{$("signupButton").disabled=false;}
 };
 $("signOut").onclick=async()=>{
-  const {error}=await sb.auth.signOut();
-  if(error)return notice(error.message);
-  await session(null);
+ const {error}=await sb.auth.signOut();
+ if(error)return notice(error.message);
+ await session(null);
 };
 const {data:initial}=await sb.auth.getUser();
 await session(initial.user);
 sb.auth.onAuthStateChange((event,s)=>{
-  if(event==="SIGNED_OUT"&&user)session(null);
-  if(event==="SIGNED_IN"&&s?.user?.id!==user?.id)
-    session(s.user);
+ if(event==="SIGNED_OUT"&&user)session(null);
+ if(event==="SIGNED_IN"&&s?.user?.id!==user?.id)session(s.user);
 });
 
 function renderWeek(container,start){
-  const events=kind("event");
-  const days=Array.from({length:7},(_,i)=>plusDays(start,i));
-  container.innerHTML=
-    days.map(d=>`<div class="weekday">${
-      d.toLocaleDateString("en-US",{weekday:"short"}).charAt(0)
-    }</div>`).join("")+
-    days.map(d=>{
-      const iso=localDate(d);
-      const matching=events.filter(r=>r.data.date===iso);
-      return `<div class="day ${iso===today()?"today":""}">
-        ${d.getDate()}
-        ${matching.length?'<div class="eventdot"></div>':""}
-        ${matching.slice(0,2).map(r=>`<div class="eventname">${
-          esc(r.data.name)}</div>`).join("")}
-      </div>`;
-    }).join("");
+ const days=Array.from({length:7},(_,i)=>plusDays(start,i));
+ container.innerHTML=
+  days.map(d=>`<div class="weekday">${
+   d.toLocaleDateString("en-US",{weekday:"short"}).charAt(0)
+  }</div>`).join("")+
+  days.map(d=>{
+   const iso=localDate(d);
+   const matches=kind("event").filter(r=>r.data.date===iso);
+   return `<div class="day ${iso===today()?"today":""}">
+    ${d.getDate()}
+    ${matches.length?'<div class="eventdot"></div>':""}
+    ${matches.slice(0,2).map(r=>`<div class="eventname">${
+     esc(r.data.name)}</div>`).join("")}
+   </div>`;
+  }).join("");
 }
 function renderHome(){
-  const d=new Date(),hour=d.getHours();
-  $("todayLabel").textContent=d.toLocaleDateString("en-US",{
-    weekday:"long",month:"long",day:"numeric"
-  }).toUpperCase();
-  $("greeting").textContent=hour<12?"Good morning.":
-    hour<17?"Good afternoon.":"Good evening.";
-  renderWeek($("homeWeek"),monday(d));
-  $("homePrompt").textContent=prompts[promptIndex];
+ const d=new Date(),hour=d.getHours();
+ $("todayLabel").textContent=d.toLocaleDateString("en-US",{
+  weekday:"long",month:"long",day:"numeric"
+ }).toUpperCase();
+ $("greeting").textContent=hour<12?"Good morning.":
+  hour<17?"Good afternoon.":"Good evening.";
+ renderWeek($("homeWeek"),monday(d));
+ $("homePrompt").textContent=prompts[promptIndex];
 }
 $("tryPrompt").onclick=()=>{
-  showPage("writing");openStory(null,prompts[promptIndex]);
+ showPage("writing");openStory(null,prompts[promptIndex]);
 };
 
 function renderCalendar(){
-  $("weekTitle").textContent=week.toLocaleDateString("en-US",{
-    month:"short",day:"numeric"
-  })+" – "+plusDays(week,6).toLocaleDateString("en-US",{
-    month:"short",day:"numeric"
+ $("weekTitle").textContent=week.toLocaleDateString("en-US",{
+  month:"short",day:"numeric"
+ })+" – "+plusDays(week,6).toLocaleDateString("en-US",{
+  month:"short",day:"numeric"
+ });
+ renderWeek($("calendarWeek"),week);
+ $("eventList").innerHTML=kind("event").slice().sort(
+  (a,b)=>a.data.date.localeCompare(b.data.date)
+ ).map(r=>`<div class="entry">
+  <div class="row between">
+   <span><strong>${esc(r.data.name)}</strong>
+    <span class="muted small">${esc(r.data.date)}</span></span>
+   <button class="btn" data-del-event="${r.id}">Remove</button>
+  </div>
+  ${r.data.type==="birthday"?`
+   <details><summary>Gift ideas & notes</summary>
+    <label>Gift notes<textarea data-gift="${r.id}">${
+     esc(r.data.giftNotes||"")}</textarea></label>
+   </details>`:""}
+ </div>`).join("");
+ document.querySelectorAll("[data-del-event]").forEach(b=>
+  b.onclick=async()=>{
+   if(!confirm("Remove this event?"))return;
+   try{await remove("personal_records",b.dataset.delEvent);}
+   catch(e){notice(e.message);}
   });
-  renderWeek($("calendarWeek"),week);
-  $("eventList").innerHTML=kind("event").slice().sort(
-    (a,b)=>a.data.date.localeCompare(b.data.date)
-  ).map(r=>`<div class="entry">
-    <div class="row between">
-      <span><strong>${esc(r.data.name)}</strong>
-      <span class="muted small">${esc(r.data.date)}</span></span>
-      <button class="btn" data-del-event="${r.id}">Remove</button>
-    </div>
-    ${r.data.type==="birthday"?`
-      <details><summary>Gift ideas & notes</summary>
-        <label>Gift notes<textarea data-gift="${r.id}">${
-          esc(r.data.giftNotes||"")}</textarea></label>
-      </details>`:""}
-  </div>`).join("");
-  document.querySelectorAll("[data-del-event]").forEach(b=>
-    b.onclick=async()=>{
-      if(!confirm("Remove this event?"))return;
-      try{await deleteRecord(b.dataset.delEvent);}
-      catch(e){notice(e.message);}
-    });
-  document.querySelectorAll("[data-gift]").forEach(t=>
-    t.onchange=async()=>{
-      const r=records.find(x=>x.id===t.dataset.gift);
-      if(!r)return;
-      try{await updateRecord(r.id,{...r.data,giftNotes:t.value});}
-      catch(e){notice(e.message);}
-    });
+ document.querySelectorAll("[data-gift]").forEach(t=>
+  t.onchange=async()=>{
+   const r=records.find(x=>x.id===t.dataset.gift);
+   if(!r)return;
+   try{await write("personal_records",{data:{...r.data,giftNotes:t.value}},r.id);}
+   catch(e){notice(e.message);}
+  });
 }
 $("prevWeek").onclick=()=>{week=plusDays(week,-7);renderCalendar();};
 $("nextWeek").onclick=()=>{week=plusDays(week,7);renderCalendar();};
 $("eventDate").value=today();
 $("eventForm").onsubmit=async e=>{
-  e.preventDefault();busy(e.target,true);
-  try{
-    await insertRecord("event",{
-      name:$("eventName").value.trim(),
-      date:$("eventDate").value,
-      type:$("eventType").value
-    });
-    e.target.reset();$("eventDate").value=today();
-    notice("Event saved.");
-  }catch(err){notice(err.message);}
-  finally{busy(e.target,false);}
+ e.preventDefault();busy(e.target,true);
+ try{
+  await write("personal_records",{kind:"event",data:{
+   name:$("eventName").value.trim(),
+   date:$("eventDate").value,
+   type:$("eventType").value
+  }});
+  e.target.reset();$("eventDate").value=today();
+  notice("Event saved.");
+ }catch(err){notice(err.message);}
+ finally{busy(e.target,false);}
 };
 $("icsFile").onchange=async e=>{
-  const file=e.target.files[0];if(!file)return;
-  try{
-    const raw=(await file.text()).replace(/\r?\n[ \t]/g,"");
-    const chunks=raw.split("BEGIN:VEVENT").slice(1);
-    const existing=new Set(kind("event")
-      .map(r=>r.data.importId).filter(Boolean));
-    const entries=[];
-    for(const chunk of chunks){
-      const lines=chunk.split("END:VEVENT")[0].split(/\r?\n/);
-      const field=k=>{
-        const line=lines.find(s=>s.startsWith(k+":")||
-          s.startsWith(k+";"));
-        return line?line.slice(line.indexOf(":")+1).trim():"";
-      };
-      const name=field("SUMMARY").replace(/\\,/g,",")
-        .replace(/\\n/g," ");
-      const match=field("DTSTART").match(/^(\d{4})(\d{2})(\d{2})/);
-      if(!name||!match)continue;
-      const date=`${match[1]}-${match[2]}-${match[3]}`;
-      const importId=field("UID")||name+"-"+date;
-      if(existing.has(importId))continue;
-      existing.add(importId);
-      entries.push({user_id:user.id,kind:"event",data:{
-        name,date,importId,source:"ics",
-        type:/birthday|bday/i.test(name)?"birthday":"other"
-      }});
-    }
-    if(!entries.length)return notice("No new events found.");
-    const {error}=await sb.from("personal_records").insert(entries);
-    if(error)throw error;
-    await sync();
-    notice(`Imported ${entries.length} events.`);
-  }catch(err){notice("Import failed: "+err.message);}
-  e.target.value="";
-};
-
-function renderThings(){
-  $("listsMenu").innerHTML=lists.length?lists.map(l=>`
-    <div class="entry row between">
-      <button class="btn" data-open-list="${l.id}">${
-        esc(l.title)}</button>
-      <span class="muted small">${(l.items||[]).length} items</span>
-    </div>`).join(""):'<p class="muted">No lists yet.</p>';
-  document.querySelectorAll("[data-open-list]").forEach(b=>
-    b.onclick=()=>{activeList=b.dataset.openList;renderThings();});
-  const list=lists.find(l=>l.id===activeList);
-  if(!list){
-    $("listDetail").innerHTML="<h3>Select a list</h3><p class='muted'>Or create a new one.</p>";
-  }else{
-    $("listDetail").innerHTML=`
-      <div class="row between"><h3>${esc(list.title)}</h3>
-      <button class="btn" id="deleteList">Delete</button></div>
-      <form id="addListItem" class="row" style="margin-top:12px">
-        <input id="newListItem" placeholder="Add an item"
-          style="flex:1;min-width:130px" required>
-        <button class="btn primary">Add</button>
-      </form>
-      <div>${(list.items||[]).map((item,i)=>`
-        <div class="checkrow">
-          <input type="checkbox" data-check="${i}" ${
-            item.done?"checked":""}>
-          <span class="${item.done?"done":""}">${esc(item.text)}</span>
-          <button class="btn" data-del-item="${i}">×</button>
-        </div>`).join("")}</div>
-      <div class="row" style="margin-top:14px">
-        <button class="btn" id="copyList">Copy list</button>
-        <button class="btn" id="textList">Text list</button>
-      </div>`;
-    $("addListItem").onsubmit=async e=>{
-      e.preventDefault();
-      const value=$("newListItem").value.trim();if(!value)return;
-      try{await updateList(list.id,{items:[
-        ...(list.items||[]),{text:value,done:false}
-      ]});}catch(err){notice(err.message);}
-    };
-    document.querySelectorAll("[data-check]").forEach(c=>
-      c.onchange=async()=>{
-        const items=structuredClone(list.items||[]);
-        items[Number(c.dataset.check)].done=c.checked;
-        try{await updateList(list.id,{items});}
-        catch(err){notice(err.message);}
-      });
-    document.querySelectorAll("[data-del-item]").forEach(b=>
-      b.onclick=async()=>{
-        const items=(list.items||[]).filter((_,i)=>
-          i!==Number(b.dataset.delItem));
-        try{await updateList(list.id,{items});}
-        catch(err){notice(err.message);}
-      });
-    $("deleteList").onclick=async()=>{
-      if(!confirm("Delete this list?"))return;
-      try{await deleteList(list.id);}
-      catch(err){notice(err.message);}
-    };
-    const listText=()=>list.title+"\n\n"+
-      (list.items||[]).filter(i=>!i.done)
-      .map(i=>"• "+i.text).join("\n");
-    $("copyList").onclick=async()=>{
-      try{
-        await navigator.clipboard.writeText(listText());
-        notice("Copied!");
-      }catch{notice("Copy unavailable.");}
-    };
-    $("textList").onclick=()=>{
-      location.href="sms:?&body="+encodeURIComponent(listText());
-    };
+ const file=e.target.files[0];if(!file)return;
+ try{
+  const raw=(await file.text()).replace(/\r?\n[ \t]/g,"");
+  const chunks=raw.split("BEGIN:VEVENT").slice(1);
+  const existing=new Set(kind("event")
+   .map(r=>r.data.importId).filter(Boolean));
+  const entries=[];
+  for(const chunk of chunks){
+   const lines=chunk.split("END:VEVENT")[0].split(/\r?\n/);
+   const field=k=>{
+    const line=lines.find(s=>s.startsWith(k+":")||s.startsWith(k+";"));
+    return line?line.slice(line.indexOf(":")+1).trim():"";
+   };
+   const name=field("SUMMARY").replace(/\\,/g,",").replace(/\\n/g," ");
+   const match=field("DTSTART").match(/^(\d{4})(\d{2})(\d{2})/);
+   if(!name||!match)continue;
+   const date=`${match[1]}-${match[2]}-${match[3]}`;
+   const importId=field("UID")||name+"-"+date;
+   if(existing.has(importId))continue;
+   existing.add(importId);
+   entries.push({user_id:user.id,kind:"event",data:{
+    name,date,importId,source:"ics",
+    type:/birthday|bday/i.test(name)?"birthday":"other"
+   }});
   }
-  $("savedList").innerHTML=kind("saved").map(r=>`
-    <div class="entry row between">
-      <div><strong>${esc(r.data.title)}</strong>
-      ${r.data.url?`<div><a href="${esc(r.data.url)}"
-        target="_blank" rel="noopener noreferrer">Open link</a></div>`:""}
-      <div class="muted small">${esc(r.data.note)}</div></div>
-      <button class="btn" data-del-saved="${r.id}">Remove</button>
-    </div>`).join("");
-  document.querySelectorAll("[data-del-saved]").forEach(b=>
-    b.onclick=async()=>{
-      if(!confirm("Remove this item?"))return;
-      try{await deleteRecord(b.dataset.delSaved);}
-      catch(err){notice(err.message);}
-    });
-}
-$("listForm").onsubmit=async e=>{
-  e.preventDefault();busy(e.target,true);
-  try{
-    await insertList($("listTitle").value.trim());
-    $("listTitle").value="";
-    activeList=lists.at(-1)?.id||null;
-    renderThings();notice("List saved.");
-  }catch(err){notice(err.message);}
-  finally{busy(e.target,false);}
-};
-$("savedForm").onsubmit=async e=>{
-  e.preventDefault();busy(e.target,true);
-  try{
-    await insertRecord("saved",{
-      title:$("savedTitle").value.trim(),
-      url:$("savedUrl").value.trim(),
-      note:$("savedNote").value.trim()
-    });
-    e.target.reset();notice("Saved.");
-  }catch(err){notice(err.message);}
-  finally{busy(e.target,false);}
+  if(!entries.length)return notice("No new events found.");
+  const {error}=await sb.from("personal_records").insert(entries);
+  if(error)throw error;
+  await sync();notice(`Imported ${entries.length} events.`);
+ }catch(err){notice("Import failed: "+err.message);}
+ e.target.value="";
 };
 
-$("purchaseDate").value=today();
-function renderSpending(){
-  const start=monday(new Date()),end=plusDays(start,7);
-  const purchases=kind("spending");
-  const weekly=purchases.filter(r=>
-    r.data.date>=localDate(start)&&r.data.date<localDate(end));
-  const total=weekly.reduce((n,r)=>n+Number(r.data.amount||0),0);
-  $("spendingWeek").textContent="WEEK OF "+
-    start.toLocaleDateString("en-US",{month:"short",day:"numeric"});
-  $("weekTotal").textContent=amountsVisible?money(total):"••••••";
-  $("toggleAmounts").textContent=amountsVisible
-    ?"Hide amounts":"Show amounts";
-  const totals={};
-  weekly.forEach(r=>totals[r.data.category]=
-    (totals[r.data.category]||0)+Number(r.data.amount||0));
-  const top=Object.entries(totals).sort((a,b)=>b[1]-a[1])[0];
-  $("spendingInsight").textContent=weekly.length
-    ?`${weekly.length} purchases recorded.${
-      top?" Your largest category is "+top[0]+".":""}`
-    :"Nothing recorded this week. No pressure.";
-  $("purchaseHistory").innerHTML=purchases.slice()
-    .sort((a,b)=>b.data.date.localeCompare(a.data.date))
-    .map(r=>`<div class="entry row between">
-      <div><strong>${esc(r.data.name)}</strong>
-      <div class="small muted">${esc(r.data.date)}
-      · ${esc(r.data.category)} · ${esc(r.data.reason)}</div>
-      ${r.data.note?`<div class="small muted">${
-        esc(r.data.note)}</div>`:""}</div>
-      <div class="row">
-        <strong>${amountsVisible?money(r.data.amount):"••••"}</strong>
-        <button class="btn" data-del-purchase="${r.id}">×</button>
-      </div>
-    </div>`).join("");
-  document.querySelectorAll("[data-del-purchase]").forEach(b=>
-    b.onclick=async()=>{
-      if(!confirm("Delete this purchase?"))return;
-      try{await deleteRecord(b.dataset.delPurchase);}
-      catch(err){notice(err.message);}
-    });
+function prettyList(list){
+ const items=(list.items||[]).filter(i=>!i.done);
+ return `✦ ${list.title.toUpperCase()} ✦\n\n`+
+  (items.length?items.map(i=>"☐  "+i.text).join("\n"):"Nothing on the list yet.")+
+  "\n\n♡  sent from bokchoycavitch.";
 }
-$("toggleAmounts").onclick=()=>{
-  amountsVisible=!amountsVisible;renderSpending();
-};
-$("spendingForm").onsubmit=async e=>{
+async function shareList(list){
+ const message=prettyList(list);
+ if(navigator.share){
+  try{await navigator.share({text:message});return;}
+  catch(e){if(e.name==="AbortError")return;}
+ }
+ location.href="sms:?&body="+encodeURIComponent(message);
+}
+function renderThings(){
+ $("collectionCards").innerHTML=lists.length?lists.map(l=>`
+  <div class="card collection" data-open-list="${l.id}">
+   <div class="symbol">☷</div>
+   <h3>${esc(l.title)}</h3>
+   <p class="muted small">${(l.items||[]).length} items</p>
+   <div class="row between" style="margin-top:12px">
+    <span class="chip">Collection</span>
+    <span>↗</span>
+   </div>
+  </div>`).join(""):`
+  <div class="card collection" id="emptyCollection">
+   <div class="symbol">＋</div>
+   <h3>Your first collection</h3>
+   <p class="muted small">Start a grocery list, wishlist, or anything else.</p>
+  </div>`;
+ document.querySelectorAll("[data-open-list]").forEach(el=>
+  el.onclick=()=>{activeList=el.dataset.openList;renderThings();});
+ if($("emptyCollection"))$("emptyCollection").onclick=()=>openNewList();
+ const l=lists.find(x=>x.id===activeList);
+ $("listDetail").classList.toggle("hidden",!l);
+ if(l){
+  $("listDetail").innerHTML=`
+   <div class="row between">
+    <h3>${esc(l.title)}</h3>
+    <button class="btn danger" id="deleteList">Delete list</button>
+   </div>
+   <form id="addListItem" class="row" style="margin:15px 0">
+    <input id="newListItem" placeholder="Add something"
+     style="flex:1;min-width:130px" required>
+    <button class="btn primary">Add</button>
+   </form>
+   ${(l.items||[]).map((item,i)=>`
+    <div class="checkrow">
+     <input type="checkbox" data-check="${i}" ${item.done?"checked":""}>
+     <span class="${item.done?"done":""}">${esc(item.text)}</span>
+     <button class="btn" data-del-item="${i}">×</button>
+    </div>`).join("")}
+   <div class="row" style="margin-top:16px">
+    <button class="btn primary" id="textList">Text to myself ♡</button>
+    <button class="btn" id="copyList">Copy pretty list</button>
+    <button class="btn" id="closeList">Close</button>
+   </div>`;
+  $("addListItem").onsubmit=async e=>{
+   e.preventDefault();
+   const value=$("newListItem").value.trim();if(!value)return;
+   try{await write("lists",{items:[
+    ...(l.items||[]),{text:value,done:false}
+   ]},l.id);}catch(err){notice(err.message);}
+  };
+  document.querySelectorAll("[data-check]").forEach(c=>
+   c.onchange=async()=>{
+    const items=structuredClone(l.items||[]);
+    items[Number(c.dataset.check)].done=c.checked;
+    try{await write("lists",{items},l.id);}
+    catch(err){notice(err.message);}
+   });
+  document.querySelectorAll("[data-del-item]").forEach(b=>
+   b.onclick=async()=>{
+    const items=(l.items||[]).filter((_,i)=>i!==Number(b.dataset.delItem));
+    try{await write("lists",{items},l.id);}
+    catch(err){notice(err.message);}
+   });
+  $("deleteList").onclick=async()=>{
+   if(!confirm("Delete this list and all its items?"))return;
+   try{activeList=null;await remove("lists",l.id);}
+   catch(err){notice(err.message);}
+  };
+  $("closeList").onclick=()=>{activeList=null;renderThings();};
+  $("textList").onclick=()=>shareList(l);
+  $("copyList").onclick=async()=>{
+   try{await navigator.clipboard.writeText(prettyList(l));notice("Copied!");}
+   catch{notice("Copy unavailable.");}
+  };
+ }
+ $("savedList").innerHTML=kind("saved").map(r=>`
+  <div class="entry row between">
+   <div><strong>${esc(r.data.title)}</strong>
+    ${r.data.url?`<div><a href="${esc(r.data.url)}"
+     target="_blank" rel="noopener noreferrer">Open link</a></div>`:""}
+    <div class="muted small">${esc(r.data.note)}</div>
+   </div>
+   <button class="btn" data-del-saved="${r.id}">Remove</button>
+  </div>`).join("");
+ document.querySelectorAll("[data-del-saved]").forEach(b=>
+  b.onclick=async()=>{
+   if(!confirm("Remove this saved item?"))return;
+   try{await remove("personal_records",b.dataset.delSaved);}
+   catch(err){notice(err.message);}
+  });
+}
+function openNewList(){
+ openDialog(`<h3>New collection</h3>
+  <form id="newListForm">
+   <label>Name<input id="newListName" required
+    placeholder="Grocery list, wishlist, little ideas..."></label>
+   <div class="row">
+    <button class="btn primary">Create collection</button>
+    <button class="btn" type="button" id="cancelDialog">Cancel</button>
+   </div>
+  </form>`);
+ $("cancelDialog").onclick=closeDialog;
+ $("newListForm").onsubmit=async e=>{
   e.preventDefault();busy(e.target,true);
   try{
-    await insertRecord("spending",{
-      amount:Number($("purchaseAmount").value),
-      date:$("purchaseDate").value,
-      name:$("purchaseName").value.trim(),
-      category:$("purchaseCategory").value,
-      reason:$("purchaseReason").value,
-      note:$("purchaseNote").value.trim()
-    });
-    e.target.reset();$("purchaseDate").value=today();
-    notice("Purchase recorded.");
-  }catch(err){notice(err.message);}
-  finally{busy(e.target,false);}
+   const id=await write("lists",{
+    title:$("newListName").value.trim(),items:[]
+   });
+   activeList=id;closeDialog();renderThings();notice("Collection created.");
+  }catch(err){notice(err.message);busy(e.target,false);}
+ };
+}
+$("newListButton").onclick=openNewList;
+$("savedForm").onsubmit=async e=>{
+ e.preventDefault();busy(e.target,true);
+ try{
+  await write("personal_records",{kind:"saved",data:{
+   title:$("savedTitle").value.trim(),
+   url:$("savedUrl").value.trim(),
+   note:$("savedNote").value.trim()
+  }});
+  e.target.reset();notice("Saved.");
+ }catch(err){notice(err.message);}
+ finally{busy(e.target,false);}
 };
+
+function balance(account){
+ let n=Number(account.opening_balance||0);
+ for(const t of transactions){
+  const a=Number(t.amount);
+  const primary=t.account_id===account.id;
+  const related=t.related_account_id===account.id;
+  if(t.type==="purchase"&&primary)
+   n+=account.type==="credit"?a:-a;
+  if(t.type==="income"&&primary)
+   n+=account.type==="credit"?-a:a;
+  if(t.type==="adjustment"&&primary)
+   n+=account.type==="credit"?-a:a;
+  if(t.type==="transfer"){
+   if(primary)n-=a;
+   if(related)n+=a;
+  }
+  if(t.type==="payment"){
+   if(primary)n-=a;
+   if(related)n-=a;
+  }
+ }
+ return Math.round(n*100)/100;
+}
+function accountName(id){
+ return accounts.find(a=>a.id===id)?.name||"Unknown account";
+}
+function renderMoney(){
+ $("toggleBalances").textContent=balancesVisible?"Hide balances":"Show balances";
+ $("accountList").innerHTML=accounts.length?accounts.map(a=>`
+  <div class="account-card">
+   <div class="account-top">
+    <div><strong>${esc(a.name)}</strong>
+     <div class="muted small">${a.type==="credit"?"Credit · amount owed":
+      a.type==="debit"?"Debit":a.type==="cash"?"Cash":"Savings"}</div>
+    </div>
+    <button class="btn" data-edit-account="${a.id}">Edit</button>
+   </div>
+   <div class="balance">${balancesVisible?cash(balance(a)):"••••••"}</div>
+  </div>`).join(""):'<p class="muted">Add your first account to get started.</p>';
+ document.querySelectorAll("[data-edit-account]").forEach(b=>
+  b.onclick=()=>editAccount(b.dataset.editAccount));
+ $("transactionList").innerHTML=transactions.length?transactions.map(t=>`
+  <div class="entry clickable row between" data-open-transaction="${t.id}">
+   <div>
+    <strong>${esc(t.title)}</strong>
+    <div class="muted small">${esc(t.transaction_date)} · ${
+     esc(t.category)} · ${esc(accountName(t.account_id))}</div>
+    ${t.note?'<span class="chip">Note</span>':""}
+   </div>
+   <div class="row">
+    <strong>${balancesVisible?
+     (t.type==="income"?"+":t.type==="purchase"?"−":"")+cash(t.amount):
+     "••••"}</strong>
+    <span class="muted">›</span>
+   </div>
+  </div>`).join(""):'<p class="muted">Your transactions will appear here.</p>';
+ document.querySelectorAll("[data-open-transaction]").forEach(el=>
+  el.onclick=()=>{selectedTransaction=el.dataset.openTransaction;renderMoney();});
+ const t=transactions.find(x=>x.id===selectedTransaction);
+ $("transactionDetail").classList.toggle("hidden",!t);
+ if(t){
+  $("transactionDetail").innerHTML=`
+   <div class="row between">
+    <h3>Transaction details</h3>
+    <button class="btn" id="closeTransaction">Close</button>
+   </div>
+   <h2 style="margin:14px 0">${esc(t.title)}</h2>
+   <div class="amount">${balancesVisible?cash(t.amount):"••••••"}</div>
+   <div class="detail-grid" style="margin-top:18px">
+    <div><div class="eyebrow">DATE</div>${esc(t.transaction_date)}</div>
+    <div><div class="eyebrow">TYPE</div>${esc(t.type)}</div>
+    <div><div class="eyebrow">CATEGORY</div>${esc(t.category)}</div>
+    <div><div class="eyebrow">ACCOUNT</div>${esc(accountName(t.account_id))}</div>
+    <div><div class="eyebrow">WHY</div>${esc(t.reason||"—")}</div>
+    <div><div class="eyebrow">HOW I FELT</div>${esc(t.feeling||"—")}</div>
+   </div>
+   ${t.related_account_id?`<p class="muted small">
+    Other account: ${esc(accountName(t.related_account_id))}</p>`:""}
+   <div class="detail">
+    <div class="eyebrow">PERSONAL NOTE</div>
+    <p class="content">${esc(t.note||"No note added.")}</p>
+   </div>
+   <div class="row" style="margin-top:15px">
+    <button class="btn" id="editTransaction">Edit transaction</button>
+    <button class="btn danger" id="deleteTransaction">Delete</button>
+   </div>`;
+  $("closeTransaction").onclick=()=>{
+   selectedTransaction=null;renderMoney();
+  };
+  $("editTransaction").onclick=()=>openTransactionForm(t);
+  $("deleteTransaction").onclick=async()=>{
+   if(!confirm("Delete this transaction? Account balances will recalculate."))return;
+   try{
+    selectedTransaction=null;
+    await remove("money_transactions",t.id);
+    notice("Transaction deleted.");
+   }catch(e){notice(e.message);}
+  };
+ }
+}
+$("toggleBalances").onclick=()=>{
+ balancesVisible=!balancesVisible;renderMoney();
+};
+function accountForm(existing=null){
+ openDialog(`<h3>${existing?"Edit account":"Add an account"}</h3>
+  <form id="accountForm">
+   <label>Account name<input id="accountName" required
+    value="${esc(existing?.name||"")}"
+    placeholder="Chase Checking, Discover, Cash..."></label>
+   <label>Account type<select id="accountType">
+    ${optionList(["debit","savings","credit","cash"],existing?.type||"debit")}
+   </select></label>
+   <label>Starting balance / amount owed
+    <input id="accountBalance" type="number" min="0" step=".01"
+     value="${existing?Number(existing.opening_balance):""}" required></label>
+   <p class="muted small">For credit cards, enter the amount owed.
+    For other accounts, enter money available.
+    Transactions will automatically adjust this number.</p>
+   <div class="row">
+    <button class="btn primary">Save account</button>
+    <button class="btn" type="button" id="cancelDialog">Cancel</button>
+   </div>
+  </form>`);
+ $("cancelDialog").onclick=closeDialog;
+ $("accountForm").onsubmit=async e=>{
+  e.preventDefault();busy(e.target,true);
+  try{
+   await write("money_accounts",{
+    name:$("accountName").value.trim(),
+    type:$("accountType").value,
+    opening_balance:Number($("accountBalance").value)
+   },existing?.id||null);
+   closeDialog();notice("Account saved.");
+  }catch(err){notice(err.message);busy(e.target,false);}
+ };
+}
+function editAccount(id){
+ const a=accounts.find(x=>x.id===id);if(!a)return;
+ const current=balance(a);
+ openDialog(`<h3>Edit ${esc(a.name)}</h3>
+  <form id="editAccountForm">
+   <label>Account name<input id="editAccountName"
+    value="${esc(a.name)}" required></label>
+   <label>Current balance / amount owed
+    <input id="editCurrentBalance" type="number" min="0"
+     step=".01" value="${current}" required></label>
+   <p class="muted small">Changing this amount adjusts the account's
+    starting balance while keeping your transaction history intact.</p>
+   <div class="row">
+    <button class="btn primary">Save changes</button>
+    <button class="btn" type="button" id="cancelDialog">Cancel</button>
+   </div>
+  </form>`);
+ $("cancelDialog").onclick=closeDialog;
+ $("editAccountForm").onsubmit=async e=>{
+  e.preventDefault();busy(e.target,true);
+  try{
+   const desired=Number($("editCurrentBalance").value);
+   const delta=desired-current;
+   await write("money_accounts",{
+    name:$("editAccountName").value.trim(),
+    opening_balance:Number(a.opening_balance)+delta
+   },a.id);
+   closeDialog();notice("Account updated.");
+  }catch(err){notice(err.message);busy(e.target,false);}
+ };
+}
+$("addAccountButton").onclick=()=>accountForm();
+function transactionTypeFields(type,existing){
+ const isTwo=["transfer","payment"].includes(type);
+ const options=accounts.map(a=>`<option value="${a.id}" ${
+  a.id===existing?.account_id?"selected":""}>${esc(a.name)}</option>`).join("");
+ const related=accounts.map(a=>`<option value="${a.id}" ${
+  a.id===existing?.related_account_id?"selected":""}>${esc(a.name)}</option>`).join("");
+ return `<label>${type==="payment"?"Paying from":type==="transfer"?
+  "Transfer from":"Account"}
+  <select id="txAccount" required>${options}</select></label>
+  ${isTwo?`<label>${type==="payment"?"Credit card being paid":"Transfer to"}
+   <select id="txRelated" required>${related}</select></label>`:""}
+  <label>Category<select id="txCategory">
+   ${optionList(type==="income"?["Paycheck","Other income"]:
+    type==="payment"?["Credit card payment"]:
+    type==="transfer"?["Transfer"]:categories,
+    existing?.category||"")}</select></label>`;
+}
+function openTransactionForm(existing=null){
+ if(!accounts.length)return notice("Add an account first.");
+ const type=existing?.type||"purchase";
+ openDialog(`<h3>${existing?"Edit transaction":"New transaction"}</h3>
+  <form id="transactionForm">
+   <label>Transaction type<select id="txType">
+    ${optionList(["purchase","income","transfer","payment"],type)}
+   </select></label>
+   <label>What was it for?<input id="txTitle" required
+    value="${esc(existing?.title||"")}"
+    placeholder="Target, Paycheck, Coffee..."></label>
+   <div class="grid">
+    <label>Amount<input id="txAmount" type="number" min=".01"
+     step=".01" required value="${existing?.amount||""}"></label>
+    <label>Date<input id="txDate" type="date" required
+     value="${existing?.transaction_date||today()}"></label>
+   </div>
+   <div id="transactionFields"></div>
+   <label>Why did you make this purchase?
+    <select id="txReason">${optionList(reasons,existing?.reason||"")}</select>
+   </label>
+   <label>How did you feel?
+    <select id="txFeeling">${optionList(feelings,existing?.feeling||"")}</select>
+   </label>
+   <label>Personal note<textarea id="txNote"
+    placeholder="Anything you want to remember...">${
+     esc(existing?.note||"")}</textarea></label>
+   <div class="row">
+    <button class="btn primary">Save transaction</button>
+    <button class="btn" type="button" id="cancelDialog">Cancel</button>
+   </div>
+  </form>`);
+ const updateFields=()=>{
+  $("transactionFields").innerHTML=
+   transactionTypeFields($("txType").value,existing);
+ };
+ $("txType").onchange=updateFields;updateFields();
+ $("cancelDialog").onclick=closeDialog;
+ $("transactionForm").onsubmit=async e=>{
+  e.preventDefault();busy(e.target,true);
+  try{
+   const type=$("txType").value;
+   const account_id=$("txAccount").value;
+   const related_account_id=["transfer","payment"].includes(type)
+    ?$("txRelated").value:null;
+   if(related_account_id===account_id)
+    throw Error("Choose two different accounts.");
+   const source=accounts.find(a=>a.id===account_id);
+   const dest=accounts.find(a=>a.id===related_account_id);
+   if(type==="payment"&&(source?.type==="credit"||dest?.type!=="credit"))
+    throw Error("Choose a non-credit account and a credit card.");
+   if(type==="transfer"&&(source?.type==="credit"||dest?.type==="credit"))
+    throw Error("Use credit card payment for credit accounts.");
+   if(type==="income"&&source?.type==="credit")
+    throw Error("Choose a debit, savings, or cash account for income.");
+   await write("money_transactions",{
+    type,account_id,related_account_id,
+    amount:Number($("txAmount").value),
+    title:$("txTitle").value.trim(),
+    transaction_date:$("txDate").value,
+    category:$("txCategory").value,
+    reason:$("txReason").value,
+    feeling:$("txFeeling").value,
+    note:$("txNote").value.trim()
+   },existing?.id||null);
+   closeDialog();notice("Transaction saved.");
+  }catch(err){notice(err.message);busy(e.target,false);}
+ };
+}
+$("newTransactionButton").onclick=()=>openTransactionForm();
 
 function renderWriting(){
-  $("writingPrompt").textContent=prompts[promptIndex];
-  $("storyArchive").innerHTML=kind("story").slice().reverse()
-    .map(r=>`<div class="entry row between">
-      <div><strong>${esc(r.data.title||"Untitled story")}</strong>
-      <div class="small muted">${esc(r.data.prompt)}</div></div>
-      <button class="btn" data-story="${r.id}">Open</button>
-    </div>`).join("")||"<p class='muted'>Your stories will appear here.</p>";
-  document.querySelectorAll("[data-story]").forEach(b=>
-    b.onclick=()=>{
-      const r=records.find(x=>x.id===b.dataset.story);
-      if(r)openStory(r,r.data.prompt);
-    });
+ $("writingPrompt").textContent=prompts[promptIndex];
+ $("storyArchive").innerHTML=kind("story").slice().reverse()
+  .map(r=>`<div class="entry row between">
+   <div><strong>${esc(r.data.title||"Untitled story")}</strong>
+    <div class="muted small">${esc(r.data.prompt)}</div></div>
+   <button class="btn" data-story="${r.id}">Open</button>
+  </div>`).join("")||"<p class='muted'>Your stories will appear here.</p>";
+ document.querySelectorAll("[data-story]").forEach(b=>
+  b.onclick=()=>{
+   const r=records.find(x=>x.id===b.dataset.story);
+   if(r)openStory(r,r.data.prompt);
+  });
 }
-function openStory(record,prompt){
-  selectedStory=record?.id||null;
-  $("writingLanding").classList.add("hidden");
-  $("writingEditor").classList.remove("hidden");
-  $("editorPrompt").textContent=prompt;
-  $("storyTitle").value=record?.data.title||"";
-  $("storyBody").value=record?.data.body||"";
-  $("storyStatus").textContent=record?"Saved story":"Not saved yet";
+function openStory(r,prompt){
+ selectedStory=r?.id||null;
+ $("writingLanding").classList.add("hidden");
+ $("writingEditor").classList.remove("hidden");
+ $("editorPrompt").textContent=prompt;
+ $("storyTitle").value=r?.data.title||"";
+ $("storyBody").value=r?.data.body||"";
+ $("storyStatus").textContent=r?"Saved story":"Not saved yet";
 }
 $("startWriting").onclick=()=>openStory(null,prompts[promptIndex]);
 $("changePrompt").onclick=()=>{
-  promptIndex=(promptIndex+1)%prompts.length;
-  renderWriting();renderHome();
+ promptIndex=(promptIndex+1)%prompts.length;renderWriting();renderHome();
 };
 $("saveStory").onclick=async()=>{
-  $("saveStory").disabled=true;
-  try{
-    const data={
-      title:$("storyTitle").value.trim(),
-      body:$("storyBody").value,
-      prompt:$("editorPrompt").textContent
-    };
-    if(selectedStory)await updateRecord(selectedStory,data);
-    else selectedStory=await insertRecord("story",data);
-    $("storyStatus").textContent="Saved to your account.";
-    notice("Story saved.");
-  }catch(e){notice(e.message);}
-  finally{$("saveStory").disabled=false;}
+ $("saveStory").disabled=true;
+ try{
+  const data={
+   title:$("storyTitle").value.trim(),
+   body:$("storyBody").value,
+   prompt:$("editorPrompt").textContent
+  };
+  if(selectedStory)await write("personal_records",{data},selectedStory);
+  else selectedStory=await write("personal_records",{kind:"story",data});
+  $("storyStatus").textContent="Saved to your account.";
+  notice("Story saved.");
+ }catch(e){notice(e.message);}
+ finally{$("saveStory").disabled=false;}
 };
 $("closeStory").onclick=()=>{
-  if($("storyStatus").textContent==="Unsaved changes"||
-     $("storyStatus").textContent==="Not saved yet"){
-    if(!confirm("Leave without saving?"))return;
-  }
-  $("writingEditor").classList.add("hidden");
-  $("writingLanding").classList.remove("hidden");
-  renderWriting();
+ if(["Unsaved changes","Not saved yet"].includes($("storyStatus").textContent))
+  if(!confirm("Leave without saving?"))return;
+ $("writingEditor").classList.add("hidden");
+ $("writingLanding").classList.remove("hidden");
+ renderWriting();
 };
 ["storyTitle","storyBody"].forEach(id=>{
-  $(id).oninput=()=>$("storyStatus").textContent="Unsaved changes";
+ $(id).oninput=()=>$("storyStatus").textContent="Unsaved changes";
 });
 
 $("exportAll").onclick=()=>{
-  const blob=new Blob([JSON.stringify({
-    exported_at:new Date().toISOString(),lists,records
-  },null,2)],{type:"application/json"});
-  const link=document.createElement("a");
-  link.href=URL.createObjectURL(blob);
-  link.download="bokchoycavitch-backup.json";
-  link.click();
-  setTimeout(()=>URL.revokeObjectURL(link.href),1000);
+ const blob=new Blob([JSON.stringify({
+  exported_at:new Date().toISOString(),
+  lists,records,accounts,transactions
+ },null,2)],{type:"application/json"});
+ const link=document.createElement("a");
+ link.href=URL.createObjectURL(blob);
+ link.download="bokchoycavitch-backup.json";
+ link.click();
+ setTimeout(()=>URL.revokeObjectURL(link.href),1000);
 };
 </script>
 </body>
