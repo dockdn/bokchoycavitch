@@ -1,2 +1,817 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>My Space — personal dashboard</title><style>:root{font-family:Inter,ui-sans-serif,system-ui,sans-serif;color:#3c302b;background:#f7f4ef}*{box-sizing:border-box}body{margin:0}.shell{max-width:1120px;margin:auto;padding:28px}header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ded6cd;padding-bottom:22px}h1,h2,h3{font-family:Georgia,serif;font-weight:400}h1{font-size:38px;margin:0}h2{font-size:28px;margin:0 0 12px}.muted{color:#82766c}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:26px 0}.tabs button,.btn{border:1px solid #d8cec3;background:#fff;padding:11px 17px;border-radius:12px;color:#45372e;cursor:pointer}.tabs button.active,.btn.primary{background:#49392f;color:white}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}.card{background:#fff;border:1px solid #e5ded6;border-radius:18px;padding:23px;margin-bottom:16px}.small{font-size:13px}textarea,input,select{width:100%;padding:13px;border:1px solid #d8cec3;border-radius:10px;font:inherit;background:#fff;color:#3c302b}textarea{min-height:300px;line-height:1.8;resize:vertical}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.row.between{justify-content:space-between}.hidden{display:none!important}.story{border-top:1px solid #eee7df;padding:15px 0;cursor:pointer}.story:hover{background:#faf8f5}.pill{display:inline-block;background:#f1ebe4;padding:6px 10px;border-radius:99px;font-size:12px}.content{white-space:pre-wrap;line-height:1.8}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.day{background:#fff;border:1px solid #eee4da;border-radius:8px;min-height:65px;padding:8px;font-size:13px}.day.has{background:#eee5db}button:disabled{opacity:.5}button{font:inherit}#toast{position:fixed;bottom:16px;right:16px;background:#49392f;color:white;padding:12px 18px;border-radius:12px;display:none}@media(max-width:600px){.shell{padding:16px}h1{font-size:30px}.day{min-height:45px;padding:4px;font-size:11px}}</style></head><body><div class="shell"><header><div><div class="muted small">A LITTLE PLACE FOR EVERYTHING</div><h1>my space.</h1></div><span class="muted small" id="dateLabel"></span></header><nav class="tabs" id="tabs"><button data-page="home" class="active">Home</button><button data-page="calendar">Calendar</button><button data-page="money">Money</button><button data-page="writing">Writing Room</button><button data-page="settings">Settings</button></nav><main><section id="home"><h2>Welcome back.</h2><p class="muted">Your days, thoughtfully organized.</p><div class="grid"><div class="card"><h3>Today’s focus</h3><input id="focus" placeholder="What's important today?"><p class="muted small">Saved on this device</p></div><div class="card"><h3>Coming up</h3><div id="upcoming" class="muted">Add an occasion in Calendar.</div></div><div class="card"><h3>A little creativity</h3><p>Make a little room for writing today.</p><button class="btn primary" onclick="showPage('writing')">Open Writing Room</button></div></div></section><section id="calendar" class="hidden"><h2>Calendar</h2><p class="muted">Your occasions and thoughtful reminders. iCloud sync is not yet connected.</p><div class="card"><div class="row between"><button class="btn" id="prevMonth">←</button><h3 id="monthTitle"></h3><button class="btn" id="nextMonth">→</button></div><div id="calGrid" class="calendar"></div></div><div class="card"><h3>Add an occasion</h3><div class="grid"><input id="eventName" placeholder="Event title, e.g. Mom's birthday"><input id="eventDate" type="date"><select id="eventType"><option value="birthday">Birthday</option><option value="other">Other occasion</option></select></div><p><button class="btn primary" id="addEvent">Add event</button></p><div id="eventList"></div></div></section><section id="money" class="hidden"><h2>Money</h2><p class="muted">A simple starting point for planning, without linking bank accounts.</p><div class="card"><div class="grid"><label>Monthly income<input id="income" type="number" min="0" placeholder="0"></label><label>Essential expenses<input id="expenses" type="number" min="0" placeholder="0"></label><label>Savings goal<input id="savings" type="number" min="0" placeholder="0"></label><label>Gift spending allowance<input id="gifts" type="number" min="0" placeholder="0"></label></div><p id="moneyResult"></p><p class="muted small">All amounts are manually entered. No bank connections or automated financial recommendations yet.</p></div></section><section id="writing" class="hidden"><div class="row between"><div><h2>The Writing Room</h2><p class="muted">A new prompt, a new story, a new perspective.</p></div><button class="btn" id="newPrompt">New prompt</button></div><div id="writingStart"><div class="card"><div class="muted small">YOUR NEXT PROMPT</div><h3 id="promptText"></h3><div class="row"><button class="btn primary" id="startStory">Start writing</button><button class="btn" id="anotherPrompt">Try another prompt</button></div></div><div class="card"><div class="row between"><h3>Past writing</h3><span class="muted small" id="storyCount"></span></div><div id="archive"></div></div></div><div id="editor" class="hidden"><div class="card"><div class="row between"><span class="pill" id="editorMode">New story</span><button class="btn" id="backToArchive">← Back</button></div><h3 id="editorPrompt"></h3><input id="storyTitle" placeholder="Give your story a title (optional)"><p><textarea id="storyBody" placeholder="Begin wherever your imagination takes you..."></textarea></p><div class="row between"><span class="muted small" id="saveStatus">Saved automatically</span><span class="muted small" id="wordCount">0 words</span></div><p><button class="btn primary" id="finishStory">Finish for now</button></p></div></div><div id="reader" class="hidden"><div class="card"><button class="btn" id="readerBack">← Past writing</button><p class="muted small" id="readDate"></p><h2 id="readTitle"></h2><p class="muted" id="readPrompt"></p><hr style="border:0;border-top:1px solid #e5ded6"><div class="content" id="readBody"></div><p class="row"><button class="btn primary" id="reusePrompt">Write a NEW story with this prompt</button><button class="btn" id="editStory">Edit this draft</button></p><p class="muted small">Writing a new story creates a separate entry. Your original remains untouched.</p></div></div></section><section id="settings" class="hidden"><h2>Settings & data</h2><div class="card"><h3>Your writing belongs to you.</h3><p class="muted">This prototype stores your data locally in this browser only. It does not sync across devices, and clearing browser data can erase it. Export backups regularly.</p><div class="row"><button class="btn primary" id="exportData">Export all data</button><label class="btn" style="cursor:pointer">Import backup<input id="importData" type="file" accept="application/json" style="display:none"></label></div></div><div class="card"><h3>Coming later</h3><p>Private account sign-in, cloud sync, iCloud Calendar integration, smart gift recommendations, and writing feedback.</p></div></section></main></div><div id="toast"></div><script>
-const KEY='myspace-prototype-v1';let db;try{db=JSON.parse(localStorage.getItem(KEY))||{stories:[],events:[],money:{},focus:''}}catch{db={stories:[],events:[],money:{},focus:''}};db.stories ||= [];db.events ||= [];db.money ||= {};function save(){localStorage.setItem(KEY,JSON.stringify(db))}function $(id){return document.getElementById(id)}function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function toast(t){$('toast').textContent=t;$('toast').style.display='block';setTimeout(()=>$('toast').style.display='none',1800)}function showPage(p){document.querySelectorAll('main>section').forEach(x=>x.classList.toggle('hidden',x.id!==p));document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('active',b.dataset.page===p));if(p==='writing')renderArchive();if(p==='calendar')renderCalendar();if(p==='home')renderUpcoming()}document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>showPage(b.dataset.page));$('dateLabel').textContent=new Date().toLocaleDateString(undefined,{month:'long',day:'numeric',year:'numeric'});$('focus').value=db.focus;$('focus').oninput=e=>{db.focus=e.target.value;save()};const prompts=["Two strangers recognize each other, but neither remembers where they met.","A letter arrives for someone who hasn't lived in the house for twenty years.","Describe a room where something important has just happened, without naming the event.","A character finds an object they were certain they had destroyed.","Write a conversation in which neither person says what they actually mean.","Someone misses the last train and discovers they aren't alone on the platform.","Write about a place that feels like home to everyone except the person who lives there.","A character receives a phone call from their own number.","Describe a goodbye without using the words goodbye, sad, or miss.","A stranger offers your character something they've secretly wanted for years.","Two siblings remember the same childhood event completely differently.","Write a scene where the weather changes the outcome of a decision."];let promptIndex=Number(localStorage.getItem('myspace-prompt-index')||0)%prompts.length;let currentId=null,readerId=null,saveTimer;function setPrompt(){ $('promptText').textContent=prompts[promptIndex] }function nextPrompt(){promptIndex=(promptIndex+1)%prompts.length;localStorage.setItem('myspace-prompt-index',promptIndex);setPrompt()}$('newPrompt').onclick=nextPrompt;$('anotherPrompt').onclick=nextPrompt;setPrompt();function openEditor(prompt,id=null){currentId=id||crypto.randomUUID();let story=db.stories.find(s=>s.id===id);if(!story){story={id:currentId,prompt,title:'',body:'',created:new Date().toISOString(),updated:new Date().toISOString(),status:'draft'};db.stories.unshift(story);save()}$('writingStart').classList.add('hidden');$('reader').classList.add('hidden');$('editor').classList.remove('hidden');$('editorPrompt').textContent=story.prompt;$('storyTitle').value=story.title;$('storyBody').value=story.body;$('editorMode').textContent=id?'Continue draft':'New story';updateCount();$('saveStatus').textContent='Saved automatically'}$('startStory').onclick=()=>openEditor(prompts[promptIndex]);function updateCount(){$('wordCount').textContent=($('storyBody').value.trim().match(/\S+/g)||[]).length+' words'}function saveDraft(){const s=db.stories.find(x=>x.id===currentId);if(!s)return;s.title=$('storyTitle').value;s.body=$('storyBody').value;s.updated=new Date().toISOString();save();$('saveStatus').textContent='Saved '+new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'})}function changed(){updateCount();$('saveStatus').textContent='Saving…';clearTimeout(saveTimer);saveTimer=setTimeout(saveDraft,300)}$('storyTitle').oninput=changed;$('storyBody').oninput=changed;function closeEditor(finish=false){clearTimeout(saveTimer);saveDraft();const s=db.stories.find(x=>x.id===currentId);if(finish&&s){s.status='complete';save()}$('editor').classList.add('hidden');$('writingStart').classList.remove('hidden');renderArchive()}$('finishStory').onclick=()=>closeEditor(true);$('backToArchive').onclick=()=>closeEditor(false);function renderArchive(){$('storyCount').textContent=db.stories.length+' saved';$('archive').innerHTML=db.stories.length?db.stories.map(s=>`<div class="story" data-id="${esc(s.id)}"><div class="row between"><strong>${esc(s.title||'Untitled story')}</strong><span class="pill">${esc(s.status)}</span></div><p class="muted small">${esc(s.prompt)}</p><span class="muted small">${new Date(s.created).toLocaleDateString()} · ${(s.body.match(/\S+/g)||[]).length} words</span></div>`).join(''):'<p class="muted">Your stories will appear here, even unfinished ones.</p>';$('archive').querySelectorAll('[data-id]').forEach(el=>el.onclick=()=>openReader(el.dataset.id))}function openReader(id){readerId=id;const s=db.stories.find(x=>x.id===id);if(!s)return;$('writingStart').classList.add('hidden');$('editor').classList.add('hidden');$('reader').classList.remove('hidden');$('readDate').textContent=new Date(s.created).toLocaleDateString()+' · '+s.status;$('readTitle').textContent=s.title||'Untitled story';$('readPrompt').textContent=s.prompt;$('readBody').textContent=s.body||'(No writing yet)'}$('readerBack').onclick=()=>{$('reader').classList.add('hidden');$('writingStart').classList.remove('hidden');renderArchive()};$('reusePrompt').onclick=()=>{let s=db.stories.find(x=>x.id===readerId);if(s)openEditor(s.prompt)};$('editStory').onclick=()=>{let s=db.stories.find(x=>x.id===readerId);if(s)openEditor(s.prompt,s.id)};let month=new Date();month.setDate(1);function renderCalendar(){const year=month.getFullYear(),m=month.getMonth();$('monthTitle').textContent=month.toLocaleDateString(undefined,{month:'long',year:'numeric'});const start=new Date(year,m,1).getDay(),days=new Date(year,m+1,0).getDate();let html=['S','M','T','W','T','F','S'].map(x=>`<div class="muted small" style="text-align:center">${x}</div>`).join('');for(let i=0;i<start;i++)html+='<div></div>';for(let d=1;d<=days;d++){let iso=`${year}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`,ev=db.events.filter(x=>x.date===iso);html+=`<div class="day ${ev.length?'has':''}"><strong>${d}</strong>${ev.map(x=>`<div class="small">${x.type==='birthday'?'🎁 ':''}${esc(x.name)}</div>`).join('')}</div>`}$('calGrid').innerHTML=html;$('eventList').innerHTML=db.events.slice().sort((a,b)=>a.date.localeCompare(b.date)).map(e=>`<div class="story"><div class="row between"><span>${esc(e.name)} · ${esc(e.date)}</span><button class="btn" data-remove="${esc(e.id)}">Remove</button></div>${e.type==='birthday'?`<details><summary>Gift assistant (optional)</summary><p class="muted small">Set a budget and save recipient preferences. Live product recommendations will be added after retailer integration.</p><label>Gift budget<input type="number" min="0" data-budget="${esc(e.id)}" value="${esc(e.budget||'')}"></label><label>Recipient likes / dislikes<textarea style="min-height:90px" data-preferences="${esc(e.id)}">${esc(e.preferences||'')}</textarea></label></details>`:''}</div>`).join('');document.querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>{db.events=db.events.filter(e=>e.id!==b.dataset.remove);save();renderCalendar();renderUpcoming()});document.querySelectorAll('[data-budget]').forEach(i=>i.onchange=()=>{const e=db.events.find(x=>x.id===i.dataset.budget);e.budget=i.value;save()});document.querySelectorAll('[data-preferences]').forEach(i=>i.onchange=()=>{const e=db.events.find(x=>x.id===i.dataset.preferences);e.preferences=i.value;save()})}$('prevMonth').onclick=()=>{month.setMonth(month.getMonth()-1);renderCalendar()};$('nextMonth').onclick=()=>{month.setMonth(month.getMonth()+1);renderCalendar()};$('addEvent').onclick=()=>{if(!$('eventName').value.trim()||!$('eventDate').value)return toast('Add a title and date');db.events.push({id:crypto.randomUUID(),name:$('eventName').value.trim(),date:$('eventDate').value,type:$('eventType').value});save();$('eventName').value='';renderCalendar();renderUpcoming();toast('Event saved')};function renderUpcoming(){const now=new Date().toISOString().slice(0,10);const next=db.events.filter(x=>x.date>=now).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,3);$('upcoming').innerHTML=next.length?next.map(x=>`<p>${x.type==='birthday'?'🎁 ':''}${esc(x.name)} <span class="muted small">${esc(x.date)}</span></p>`).join(''):'Add an occasion in Calendar.'}for(const id of ['income','expenses','savings','gifts']){$(id).value=db.money[id]??'';$(id).oninput=()=>{db.money[id]=$(id).value;save();updateMoney()}}function updateMoney(){const n=k=>Number(db.money[k]||0);$('moneyResult').textContent='Estimated amount after expenses, savings and gifts: $'+(n('income')-n('expenses')-n('savings')-n('gifts')).toLocaleString(undefined,{maximumFractionDigits:2})}updateMoney();$('exportData').onclick=()=>{const blob=new Blob([JSON.stringify({version:1,exportedAt:new Date().toISOString(),data:db},null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='my-space-backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};$('importData').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const raw=JSON.parse(await f.text()),d=raw.data||raw;if(!Array.isArray(d.stories)||!Array.isArray(d.events))throw Error('Invalid backup');if(!confirm('Replace all current local data with this backup?'))return;db=d;save();location.reload()}catch{toast('Could not import backup')}};renderArchive();renderCalendar();renderUpcoming();</script></body></html>
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>bokchoycavitch — dashboard</title>
+<style>
+:root{font-family:Inter,ui-sans-serif,system-ui,sans-serif;color:#3c302b;background:#f7f4ef}
+*{box-sizing:border-box}
+body{margin:0}
+.shell{max-width:1120px;margin:auto;padding:28px}
+header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ded6cd;padding-bottom:22px}
+h1,h2,h3{font-family:Georgia,serif;font-weight:400}
+h1{font-size:38px;margin:0}
+h2{font-size:28px;margin:0 0 12px}
+.muted{color:#82766c}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:26px 0}
+.tabs button,.btn{border:1px solid #d8cec3;background:#fff;padding:11px 17px;border-radius:12px;color:#45372e;cursor:pointer}
+.tabs button.active,.btn.primary{background:#49392f;color:white}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.card{background:#fff;border:1px solid #e5ded6;border-radius:18px;padding:23px;margin-bottom:16px}
+.small{font-size:13px}
+textarea,input,select{width:100%;padding:13px;border:1px solid #d8cec3;border-radius:10px;font:inherit;background:#fff;color:#3c302b}
+textarea{min-height:300px;line-height:1.8;resize:vertical}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.row.between{justify-content:space-between}
+.hidden{display:none!important}
+.story{border-top:1px solid #eee7df;padding:15px 0;cursor:pointer}
+.story:hover{background:#faf8f5}
+.pill{display:inline-block;background:#f1ebe4;padding:6px 10px;border-radius:99px;font-size:12px}
+.content{white-space:pre-wrap;line-height:1.8}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.day{background:#fff;border:1px solid #eee4da;border-radius:8px;min-height:65px;padding:8px;font-size:13px}
+.day.has{background:#eee5db}
+button:disabled{opacity:.5}
+button{font:inherit}
+#toast{position:fixed;bottom:16px;right:16px;background:#49392f;color:white;padding:12px 18px;border-radius:12px;display:none}
+.hero-number{font-family:Georgia,serif;font-size:42px;margin:10px 0;color:#49392f}
+.dashboard-grid{margin-top:22px}
+.overview-card{background:#efe7dd}
+.budget-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.budget-strip>div{display:flex;flex-direction:column;gap:8px}
+.budget-strip strong{font-size:20px}
+.bar-label{display:flex;justify-content:space-between;font-size:13px;margin:11px 0 5px}
+.bar-track{height:8px;background:#eee8e0;border-radius:10px;overflow:hidden}
+.bar-fill{height:100%;background:#9d8471;border-radius:10px}
+@media(max-width:650px){
+.shell{padding:16px}
+h1{font-size:30px}
+.day{min-height:45px;padding:4px;font-size:11px}
+.budget-strip{grid-template-columns:repeat(2,minmax(0,1fr))}
+.hero-number{font-size:34px}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+<header>
+<div>
+<div class="muted small">A LITTLE PLACE FOR EVERYTHING</div>
+<h1>bokchoycavitch.</h1>
+</div>
+<span class="muted small" id="dateLabel"></span>
+</header>
+
+<nav class="tabs" id="tabs">
+<button data-page="home" class="active">Home</button>
+<button data-page="calendar">Calendar</button>
+<button data-page="money">Money</button>
+<button data-page="writing">Writing Room</button>
+<button data-page="settings">Settings</button>
+</nav>
+
+<main>
+<section id="home">
+<div class="row between">
+<div>
+<div class="muted small">YOUR OVERVIEW</div>
+<h2>Good to have you here.</h2>
+<p class="muted" id="homeGreeting">Your life, all in one place.</p>
+</div>
+<button class="btn" onclick="showPage('calendar')">View calendar →</button>
+</div>
+
+<div class="grid dashboard-grid">
+<div class="card overview-card">
+<div class="muted small">AVAILABLE AFTER PLANNED SPENDING</div>
+<div class="hero-number" id="homeAvailable">—</div>
+<p class="muted small" id="homeBudgetNote">Set up your budget to see your monthly picture.</p>
+<button class="btn" onclick="showPage('money')">Manage budget →</button>
+</div>
+
+<div class="card">
+<div class="muted small">UPCOMING</div>
+<h3>On your calendar</h3>
+<div id="upcoming" class="muted">No upcoming events yet.</div>
+</div>
+
+<div class="card">
+<div class="muted small">YOUR WRITING ROOM</div>
+<h3>A little creativity</h3>
+<p class="muted" id="homeWritingStats">A fresh prompt whenever you're ready.</p>
+<button class="btn" onclick="showPage('writing')">Open Writing Room →</button>
+</div>
+</div>
+
+<div class="card">
+<div class="row between">
+<h3>This month at a glance</h3>
+<button class="btn" onclick="showPage('money')">Budget details →</button>
+</div>
+<div class="budget-strip">
+<div><span class="muted small">INCOME</span><strong id="dashIncome">—</strong></div>
+<div><span class="muted small">EXPENSES</span><strong id="dashExpenses">—</strong></div>
+<div><span class="muted small">SAVINGS</span><strong id="dashSavings">—</strong></div>
+<div><span class="muted small">GIFTS</span><strong id="dashGifts">—</strong></div>
+</div>
+</div>
+</section>
+
+<section id="calendar" class="hidden">
+<h2>Calendar</h2>
+<p class="muted">Your events and occasions, with gift planning built into birthdays.</p>
+<div class="card">
+<div class="row between">
+<button class="btn" id="prevMonth">←</button>
+<h3 id="monthTitle"></h3>
+<button class="btn" id="nextMonth">→</button>
+</div>
+<div id="calGrid" class="calendar"></div>
+</div>
+
+<div class="card">
+<h3>Bring in your iCloud calendar</h3>
+<p class="muted">Import an exported .ics calendar file to see your existing events here and on your dashboard. This is a snapshot, not automatic sync.</p>
+<label class="btn">
+Import .ics file
+<input type="file" id="icsImport" accept=".ics,text/calendar" style="display:none">
+</label>
+<p class="muted small" id="icloudStatus">Not connected · imported events stay on this device.</p>
+<details>
+<summary>About automatic iCloud sync</summary>
+<p class="muted small">Private automatic syncing and editing iCloud events need a secure server-side calendar connection, which this standalone HTML prototype does not have. Never enter your Apple ID password into this page. A public iCloud calendar subscription would expose calendar details to anyone with its link, so we are not using that as the default.</p>
+</details>
+</div>
+
+<div class="card">
+<h3>Add an occasion</h3>
+<div class="grid">
+<input id="eventName" placeholder="Event title, e.g. Mom's birthday">
+<input id="eventDate" type="date">
+<select id="eventType">
+<option value="birthday">Birthday</option>
+<option value="other">Other occasion</option>
+</select>
+</div>
+<p><button class="btn primary" id="addEvent">Add event</button></p>
+<div id="eventList"></div>
+</div>
+</section>
+
+<section id="money" class="hidden">
+<div class="row between">
+<div>
+<h2>Budget & money</h2>
+<p class="muted">A monthly plan that also powers your dashboard and birthday gift budgets.</p>
+</div>
+<span class="pill">Manual budget · private to this browser</span>
+</div>
+
+<div class="grid">
+<div class="card">
+<div class="muted small">AVAILABLE AFTER PLANNED SPENDING</div>
+<div class="hero-number" id="moneyBig">$0</div>
+<p class="muted small">Income minus essentials, savings, gifts, and other spending.</p>
+</div>
+<div class="card">
+<h3>Monthly breakdown</h3>
+<div id="budgetBars"></div>
+</div>
+</div>
+
+<div class="card">
+<h3>Plan your month</h3>
+<div class="grid">
+<label>Monthly take-home income<input id="income" min="0" placeholder="0" type="number"></label>
+<label>Essential bills & expenses<input id="expenses" min="0" placeholder="0" type="number"></label>
+<label>Monthly savings goal<input id="savings" min="0" placeholder="0" type="number"></label>
+<label>Gift spending allowance<input id="gifts" min="0" placeholder="0" type="number"></label>
+<label>Groceries & everyday spending<input id="everyday" min="0" placeholder="0" type="number"></label>
+<label>Other planned spending<input id="other" min="0" placeholder="0" type="number"></label>
+</div>
+<p id="moneyResult" class="muted"></p>
+</div>
+
+<div class="card">
+<h3>Bills & recurring payments</h3>
+<div class="grid">
+<input id="billName" placeholder="Bill name, e.g. phone">
+<input id="billAmount" type="number" min="0" placeholder="Monthly amount">
+<input id="billDay" type="number" min="1" max="31" placeholder="Day of month (1–31)">
+</div>
+<p><button class="btn primary" id="addBill">Add bill</button></p>
+<div id="billList"></div>
+<p class="muted small">Bills are for planning and reminders; they aren't automatically deducted from essential expenses a second time.</p>
+</div>
+</section>
+
+<section id="writing" class="hidden">
+<div class="row between">
+<div>
+<h2>The Writing Room</h2>
+<p class="muted">A new prompt, a new story, a new perspective.</p>
+</div>
+<button class="btn" id="newPrompt">New prompt</button>
+</div>
+
+<div id="writingStart">
+<div class="card">
+<div class="muted small">YOUR NEXT PROMPT</div>
+<h3 id="promptText"></h3>
+<div class="row">
+<button class="btn primary" id="startStory">Start writing</button>
+<button class="btn" id="anotherPrompt">Try another prompt</button>
+</div>
+</div>
+
+<div class="card">
+<div class="row between">
+<h3>Past writing</h3>
+<span class="muted small" id="storyCount"></span>
+</div>
+<div id="archive"></div>
+</div>
+</div>
+
+<div id="editor" class="hidden">
+<div class="card">
+<div class="row between">
+<span class="pill" id="editorMode">New story</span>
+<button class="btn" id="backToArchive">← Back</button>
+</div>
+<h3 id="editorPrompt"></h3>
+<input id="storyTitle" placeholder="Give your story a title (optional)">
+<p><textarea id="storyBody" placeholder="Begin wherever your imagination takes you..."></textarea></p>
+<div class="row between">
+<span class="muted small" id="saveStatus">Saved automatically</span>
+<span class="muted small" id="wordCount">0 words</span>
+</div>
+<p><button class="btn primary" id="finishStory">Finish for now</button></p>
+</div>
+</div>
+
+<div id="reader" class="hidden">
+<div class="card">
+<button class="btn" id="readerBack">← Past writing</button>
+<p class="muted small" id="readDate"></p>
+<h2 id="readTitle"></h2>
+<p class="muted" id="readPrompt"></p>
+<hr style="border:0;border-top:1px solid #e5ded6">
+<div class="content" id="readBody"></div>
+<p class="row">
+<button class="btn primary" id="reusePrompt">Write a NEW story with this prompt</button>
+<button class="btn" id="editStory">Edit this draft</button>
+</p>
+<p class="muted small">Writing a new story creates a separate entry. Your original remains untouched.</p>
+</div>
+</div>
+</section>
+
+<section id="settings" class="hidden">
+<h2>Settings & data</h2>
+<div class="card">
+<h3>Your writing belongs to you.</h3>
+<p class="muted">This prototype stores your data locally in this browser only. It does not sync across devices, and clearing browser data can erase it. Export backups regularly.</p>
+<div class="row">
+<button class="btn primary" id="exportData">Export all data</button>
+<label class="btn" style="cursor:pointer">
+Import backup
+<input id="importData" type="file" accept="application/json" style="display:none">
+</label>
+</div>
+</div>
+<div class="card">
+<h3>Coming later</h3>
+<p>Private account sign-in, cloud sync, iCloud Calendar integration, smart gift recommendations, and writing feedback.</p>
+</div>
+</section>
+</main>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const KEY='myspace-prototype-v1';
+let db;
+try {
+  db=JSON.parse(localStorage.getItem(KEY))||{
+    stories:[],events:[],money:{},focus:''
+  };
+} catch {
+  db={stories:[],events:[],money:{},focus:''};
+}
+db.stories ||= [];
+db.events ||= [];
+db.money ||= {};
+db.bills ||= [];
+
+function save(){
+  localStorage.setItem(KEY,JSON.stringify(db));
+}
+function $(id){
+  return document.getElementById(id);
+}
+function esc(s){
+  return String(s||'').replace(/[&<>"']/g,c=>({
+    '&':'&amp;','<':'&lt;','>':'&gt;',
+    '"':'&quot;',"'":'&#39;'
+  }[c]));
+}
+function toast(t){
+  $('toast').textContent=t;
+  $('toast').style.display='block';
+  setTimeout(()=>$('toast').style.display='none',1800);
+}
+function showPage(p){
+  document.querySelectorAll('main>section').forEach(
+    x=>x.classList.toggle('hidden',x.id!==p)
+  );
+  document.querySelectorAll('#tabs button').forEach(
+    b=>b.classList.toggle('active',b.dataset.page===p)
+  );
+  if(p==='writing')renderArchive();
+  if(p==='calendar')renderCalendar();
+  if(p==='home'){
+    renderUpcoming();
+    updateMoney();
+  }
+}
+document.querySelectorAll('#tabs button').forEach(
+  b=>b.onclick=()=>showPage(b.dataset.page)
+);
+$('dateLabel').textContent=new Date().toLocaleDateString(
+  undefined,{month:'long',day:'numeric',year:'numeric'}
+);
+
+const prompts=[
+  "Two strangers recognize each other, but neither remembers where they met.",
+  "A letter arrives for someone who hasn't lived in the house for twenty years.",
+  "Describe a room where something important has just happened, without naming the event.",
+  "A character finds an object they were certain they had destroyed.",
+  "Write a conversation in which neither person says what they actually mean.",
+  "Someone misses the last train and discovers they aren't alone on the platform.",
+  "Write about a place that feels like home to everyone except the person who lives there.",
+  "A character receives a phone call from their own number.",
+  "Describe a goodbye without using the words goodbye, sad, or miss.",
+  "A stranger offers your character something they've secretly wanted for years.",
+  "Two siblings remember the same childhood event completely differently.",
+  "Write a scene where the weather changes the outcome of a decision."
+];
+
+let promptIndex=Number(
+  localStorage.getItem('myspace-prompt-index')||0
+)%prompts.length;
+let currentId=null,readerId=null,saveTimer;
+
+function setPrompt(){
+  $('promptText').textContent=prompts[promptIndex];
+}
+function nextPrompt(){
+  promptIndex=(promptIndex+1)%prompts.length;
+  localStorage.setItem('myspace-prompt-index',promptIndex);
+  setPrompt();
+}
+$('newPrompt').onclick=nextPrompt;
+$('anotherPrompt').onclick=nextPrompt;
+setPrompt();
+
+function openEditor(prompt,id=null){
+  currentId=id||crypto.randomUUID();
+  let story=db.stories.find(s=>s.id===id);
+  if(!story){
+    story={
+      id:currentId,prompt,title:'',body:'',
+      created:new Date().toISOString(),
+      updated:new Date().toISOString(),
+      status:'draft'
+    };
+    db.stories.unshift(story);
+    save();
+  }
+  $('writingStart').classList.add('hidden');
+  $('reader').classList.add('hidden');
+  $('editor').classList.remove('hidden');
+  $('editorPrompt').textContent=story.prompt;
+  $('storyTitle').value=story.title;
+  $('storyBody').value=story.body;
+  $('editorMode').textContent=id?'Continue draft':'New story';
+  updateCount();
+  $('saveStatus').textContent='Saved automatically';
+}
+$('startStory').onclick=()=>openEditor(prompts[promptIndex]);
+
+function updateCount(){
+  $('wordCount').textContent=(
+    $('storyBody').value.trim().match(/\S+/g)||[]
+  ).length+' words';
+}
+function saveDraft(){
+  const s=db.stories.find(x=>x.id===currentId);
+  if(!s)return;
+  s.title=$('storyTitle').value;
+  s.body=$('storyBody').value;
+  s.updated=new Date().toISOString();
+  save();
+  $('saveStatus').textContent='Saved '+
+    new Date().toLocaleTimeString([],{
+      hour:'numeric',minute:'2-digit'
+    });
+}
+function changed(){
+  updateCount();
+  $('saveStatus').textContent='Saving…';
+  clearTimeout(saveTimer);
+  saveTimer=setTimeout(saveDraft,300);
+}
+$('storyTitle').oninput=changed;
+$('storyBody').oninput=changed;
+
+function closeEditor(finish=false){
+  clearTimeout(saveTimer);
+  saveDraft();
+  const s=db.stories.find(x=>x.id===currentId);
+  if(finish&&s){
+    s.status='complete';
+    save();
+  }
+  $('editor').classList.add('hidden');
+  $('writingStart').classList.remove('hidden');
+  renderArchive();
+}
+$('finishStory').onclick=()=>closeEditor(true);
+$('backToArchive').onclick=()=>closeEditor(false);
+
+function renderArchive(){
+  $('storyCount').textContent=db.stories.length+' saved';
+  $('archive').innerHTML=db.stories.length
+    ?db.stories.map(s=>`
+      <div class="story" data-id="${esc(s.id)}">
+        <div class="row between">
+          <strong>${esc(s.title||'Untitled story')}</strong>
+          <span class="pill">${esc(s.status)}</span>
+        </div>
+        <p class="muted small">${esc(s.prompt)}</p>
+        <span class="muted small">
+          ${new Date(s.created).toLocaleDateString()}
+          · ${(s.body.match(/\S+/g)||[]).length} words
+        </span>
+      </div>
+    `).join('')
+    :'<p class="muted">Your stories will appear here, even unfinished ones.</p>';
+  $('archive').querySelectorAll('[data-id]').forEach(
+    el=>el.onclick=()=>openReader(el.dataset.id)
+  );
+}
+function openReader(id){
+  readerId=id;
+  const s=db.stories.find(x=>x.id===id);
+  if(!s)return;
+  $('writingStart').classList.add('hidden');
+  $('editor').classList.add('hidden');
+  $('reader').classList.remove('hidden');
+  $('readDate').textContent=
+    new Date(s.created).toLocaleDateString()+' · '+s.status;
+  $('readTitle').textContent=s.title||'Untitled story';
+  $('readPrompt').textContent=s.prompt;
+  $('readBody').textContent=s.body||'(No writing yet)';
+}
+$('readerBack').onclick=()=>{
+  $('reader').classList.add('hidden');
+  $('writingStart').classList.remove('hidden');
+  renderArchive();
+};
+$('reusePrompt').onclick=()=>{
+  let s=db.stories.find(x=>x.id===readerId);
+  if(s)openEditor(s.prompt);
+};
+$('editStory').onclick=()=>{
+  let s=db.stories.find(x=>x.id===readerId);
+  if(s)openEditor(s.prompt,s.id);
+};
+
+let month=new Date();
+month.setDate(1);
+
+function renderCalendar(){
+  const year=month.getFullYear(),m=month.getMonth();
+  $('monthTitle').textContent=month.toLocaleDateString(
+    undefined,{month:'long',year:'numeric'}
+  );
+  const start=new Date(year,m,1).getDay();
+  const days=new Date(year,m+1,0).getDate();
+  let html=['S','M','T','W','T','F','S'].map(
+    x=>`<div class="muted small" style="text-align:center">${x}</div>`
+  ).join('');
+  for(let i=0;i<start;i++)html+='<div></div>';
+  for(let d=1;d<=days;d++){
+    let iso=`${year}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    let ev=db.events.filter(x=>x.date===iso);
+    html+=`
+      <div class="day ${ev.length?'has':''}">
+        <strong>${d}</strong>
+        ${ev.map(x=>`
+          <div class="small">
+            ${x.type==='birthday'?'🎁 ':''}${esc(x.name)}
+          </div>
+        `).join('')}
+      </div>`;
+  }
+  $('calGrid').innerHTML=html;
+  $('eventList').innerHTML=db.events.slice()
+    .sort((a,b)=>a.date.localeCompare(b.date))
+    .map(e=>`
+      <div class="story">
+        <div class="row between">
+          <span>${esc(e.name)} · ${esc(e.date)}</span>
+          <button class="btn" data-remove="${esc(e.id)}">Remove</button>
+        </div>
+        ${e.type==='birthday'?`
+          <details>
+            <summary>Gift assistant (optional)</summary>
+            <p class="muted small">
+              Set a budget and save recipient preferences.
+              Live product recommendations will be added
+              after retailer integration.
+            </p>
+            <label>Gift budget
+              <input type="number" min="0"
+                data-budget="${esc(e.id)}"
+                value="${esc(e.budget||'')}">
+            </label>
+            <label>Recipient likes / dislikes
+              <textarea style="min-height:90px"
+                data-preferences="${esc(e.id)}">${esc(e.preferences||'')}</textarea>
+            </label>
+          </details>
+        `:''}
+      </div>
+    `).join('');
+  document.querySelectorAll('[data-remove]').forEach(
+    b=>b.onclick=()=>{
+      db.events=db.events.filter(e=>e.id!==b.dataset.remove);
+      save();
+      renderCalendar();
+      renderUpcoming();
+    }
+  );
+  document.querySelectorAll('[data-budget]').forEach(
+    i=>i.onchange=()=>{
+      const e=db.events.find(x=>x.id===i.dataset.budget);
+      e.budget=i.value;
+      save();
+    }
+  );
+  document.querySelectorAll('[data-preferences]').forEach(
+    i=>i.onchange=()=>{
+      const e=db.events.find(x=>x.id===i.dataset.preferences);
+      e.preferences=i.value;
+      save();
+    }
+  );
+}
+$('prevMonth').onclick=()=>{
+  month.setMonth(month.getMonth()-1);
+  renderCalendar();
+};
+$('nextMonth').onclick=()=>{
+  month.setMonth(month.getMonth()+1);
+  renderCalendar();
+};
+$('addEvent').onclick=()=>{
+  if(!$('eventName').value.trim()||!$('eventDate').value)
+    return toast('Add a title and date');
+  db.events.push({
+    id:crypto.randomUUID(),
+    name:$('eventName').value.trim(),
+    date:$('eventDate').value,
+    type:$('eventType').value
+  });
+  save();
+  $('eventName').value='';
+  renderCalendar();
+  renderUpcoming();
+  toast('Event saved');
+};
+function renderUpcoming(){
+  const now=new Date().toISOString().slice(0,10);
+  const next=db.events.filter(x=>x.date>=now)
+    .sort((a,b)=>a.date.localeCompare(b.date))
+    .slice(0,5);
+  $('upcoming').innerHTML=next.length
+    ?next.map(x=>`
+      <p>
+        ${x.type==='birthday'?'🎁 ':''}${esc(x.name)}
+        <span class="muted small">${esc(x.date)}</span>
+      </p>
+    `).join('')
+    :'No upcoming events. Add one in Calendar.';
+}
+
+for(const id of [
+  'income','expenses','savings','gifts','everyday','other'
+]){
+  $(id).value=db.money[id]??'';
+  $(id).oninput=()=>{
+    db.money[id]=$(id).value;
+    save();
+    updateMoney();
+  };
+}
+function currency(n){
+  return '$'+Number(n||0).toLocaleString(
+    undefined,{maximumFractionDigits:2}
+  );
+}
+function updateMoney(){
+  const n=k=>Number(db.money[k]||0);
+  const available=n('income')-
+    ['expenses','savings','gifts','everyday','other']
+      .reduce((sum,k)=>sum+n(k),0);
+  const hasData=Object.values(db.money)
+    .some(x=>x!==''&&x!=null);
+  $('moneyResult').textContent=hasData
+    ?'Monthly plan: '+currency(n('income'))+
+     ' income − '+currency(n('income')-available)+
+     ' allocated = '+currency(available)+' available.'
+    :'Enter your monthly numbers to start planning.';
+  $('moneyBig').textContent=hasData?currency(available):'—';
+  $('homeAvailable').textContent=hasData?currency(available):'—';
+  $('homeBudgetNote').textContent=hasData
+    ?(available<0
+      ?'Your planned spending exceeds income.'
+      :'Estimated monthly money not yet allocated.')
+    :'Set up your budget to see your monthly picture.';
+  for(const [id,k] of [
+    ['dashIncome','income'],
+    ['dashExpenses','expenses'],
+    ['dashSavings','savings'],
+    ['dashGifts','gifts']
+  ]){
+    $(id).textContent=hasData?currency(n(k)):'—';
+  }
+  const items=[
+    ['Essentials','expenses'],
+    ['Everyday','everyday'],
+    ['Savings','savings'],
+    ['Gifts','gifts'],
+    ['Other','other']
+  ];
+  $('budgetBars').innerHTML=items.map(([label,k])=>`
+    <div class="bar-label">
+      <span>${label}</span>
+      <strong>${currency(n(k))}</strong>
+    </div>
+    <div class="bar-track">
+      <div class="bar-fill" style="width:${
+        Math.min(100,n('income')>0
+          ?n(k)/n('income')*100:0)
+      }%"></div>
+    </div>
+  `).join('');
+}
+
+function renderBills(){
+  $('billList').innerHTML=db.bills.length
+    ?db.bills.map(b=>`
+      <div class="row between story">
+        <span>
+          <strong>${esc(b.name)}</strong>
+          · ${currency(b.amount)}
+          · day ${esc(b.day)}
+        </span>
+        <button class="btn" data-billremove="${esc(b.id)}">Remove</button>
+      </div>
+    `).join('')
+    :'<p class="muted small">No bills added yet.</p>';
+  document.querySelectorAll('[data-billremove]').forEach(
+    b=>b.onclick=()=>{
+      db.bills=db.bills.filter(x=>x.id!==b.dataset.billremove);
+      save();
+      renderBills();
+    }
+  );
+}
+$('addBill').onclick=()=>{
+  const name=$('billName').value.trim();
+  const amount=Number($('billAmount').value);
+  const day=Number($('billDay').value);
+  if(!name||!Number.isFinite(amount)||amount<0||day<1||day>31)
+    return toast('Enter a bill name, amount and valid day');
+  db.bills.push({
+    id:crypto.randomUUID(),name,amount,day
+  });
+  save();
+  ['billName','billAmount','billDay'].forEach(
+    id=>$(id).value=''
+  );
+  renderBills();
+};
+renderBills();
+
+$('homeWritingStats').textContent=db.stories.length
+  ?`${db.stories.length} saved writing ${
+    db.stories.length===1?'piece':'pieces'
+  }. Ready for another?`
+  :'A fresh prompt whenever you’re ready.';
+
+function unfoldICS(raw){
+  return raw.replace(/\r?\n[ \t]/g,'').replace(/\r/g,'');
+}
+function parseICS(raw){
+  const txt=unfoldICS(raw);
+  const blocks=txt.split('BEGIN:VEVENT').slice(1);
+  const out=[];
+  for(const block of blocks){
+    const body=block.split('END:VEVENT')[0];
+    const lines=body.split('\n');
+    const field=k=>{
+      const line=lines.find(
+        x=>x.startsWith(k+':')||x.startsWith(k+';')
+      );
+      return line
+        ?line.slice(line.indexOf(':')+1).trim()
+        :'';
+    };
+    const name=field('SUMMARY')
+      .replace(/\\n/g,' ')
+      .replace(/\\,/g,',');
+    const dt=field('DTSTART');
+    const m=dt.match(/^(\d{4})(\d{2})(\d{2})/);
+    if(!name||!m)continue;
+    const date=`${m[1]}-${m[2]}-${m[3]}`;
+    const uid=field('UID')||name+'-'+date;
+    out.push({
+      id:'ics-'+uid,
+      name,date,
+      type:/birthday|bday/i.test(name)?'birthday':'other',
+      source:'ics'
+    });
+  }
+  return out;
+}
+$('icsImport').onchange=async e=>{
+  const file=e.target.files?.[0];
+  if(!file)return;
+  try{
+    const events=parseICS(await file.text());
+    if(!events.length)
+      return toast('No supported events found in this file');
+    const existing=new Map(
+      db.events.map(x=>[x.id,x])
+    );
+    events.forEach(
+      x=>existing.set(x.id,{...existing.get(x.id),...x})
+    );
+    db.events=[...existing.values()];
+    save();
+    renderCalendar();
+    renderUpcoming();
+    $('icloudStatus').textContent=
+      `Imported ${events.length} calendar events · manual snapshot only`;
+    toast('Calendar imported');
+  }catch{
+    toast('Could not read calendar file');
+  }
+};
+
+$('exportData').onclick=()=>{
+  const blob=new Blob([
+    JSON.stringify({
+      version:1,
+      exportedAt:new Date().toISOString(),
+      data:db
+    },null,2)
+  ],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='my-space-backup.json';
+  a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+};
+$('importData').onchange=async e=>{
+  const f=e.target.files[0];
+  if(!f)return;
+  try{
+    const raw=JSON.parse(await f.text());
+    const d=raw.data||raw;
+    if(!Array.isArray(d.stories)||!Array.isArray(d.events))
+      throw Error('Invalid backup');
+    if(!confirm('Replace all current local data with this backup?'))
+      return;
+    db=d;
+    save();
+    location.reload();
+  }catch{
+    toast('Could not import backup');
+  }
+};
+
+renderArchive();
+renderCalendar();
+renderUpcoming();
+updateMoney();
+</script>
+</body>
+</html>
