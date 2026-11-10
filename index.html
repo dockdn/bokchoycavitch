@@ -4,814 +4,931 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>bokchoycavitch — dashboard</title>
+<title>bokchoycavitch.</title>
 <style>
-:root{font-family:Inter,ui-sans-serif,system-ui,sans-serif;color:#3c302b;background:#f7f4ef}
+:root{
+  --bg:#f8f6f2;--paper:#fff;--ink:#40372f;
+  --muted:#938477;--line:#e8e1d9;--accent:#665244
+}
 *{box-sizing:border-box}
-body{margin:0}
-.shell{max-width:1120px;margin:auto;padding:28px}
-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ded6cd;padding-bottom:22px}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:14px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 h1,h2,h3{font-family:Georgia,serif;font-weight:400}
-h1{font-size:38px;margin:0}
-h2{font-size:28px;margin:0 0 12px}
-.muted{color:#82766c}
-.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:26px 0}
-.tabs button,.btn{border:1px solid #d8cec3;background:#fff;padding:11px 17px;border-radius:12px;color:#45372e;cursor:pointer}
-.tabs button.active,.btn.primary{background:#49392f;color:white}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
-.card{background:#fff;border:1px solid #e5ded6;border-radius:18px;padding:23px;margin-bottom:16px}
-.small{font-size:13px}
-textarea,input,select{width:100%;padding:13px;border:1px solid #d8cec3;border-radius:10px;font:inherit;background:#fff;color:#3c302b}
-textarea{min-height:300px;line-height:1.8;resize:vertical}
-.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.row.between{justify-content:space-between}
+h1{font-size:27px;margin:0;font-style:italic}
+h2{font-size:27px;margin:0 0 8px}
+h3{font-size:20px;margin:0 0 10px}
+p{margin:8px 0 14px}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+button:disabled{opacity:.5;cursor:wait}
+.shell{max-width:1050px;margin:auto;padding:24px}
+header{display:flex;align-items:center;justify-content:space-between;
+  gap:12px;padding:12px 0 22px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:10px;letter-spacing:1.7px;text-transform:uppercase;
+  color:var(--muted);font-weight:600}
+.muted{color:var(--muted)}
+.small{font-size:12px}
+nav{display:flex;gap:6px;flex-wrap:wrap;margin:22px 0 30px}
+nav button,.btn{border:1px solid transparent;background:transparent;
+  padding:9px 14px;border-radius:9px;color:var(--ink)}
+nav button.active{background:#e9e2d9}
+.btn{border-color:var(--line);background:white}
+.btn.primary{background:var(--accent);color:white;border-color:var(--accent)}
+.btn:hover,nav button:hover{filter:brightness(.96)}
+.card{background:var(--paper);border:1px solid var(--line);
+  border-radius:13px;padding:19px;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.between{justify-content:space-between}
 .hidden{display:none!important}
-.story{border-top:1px solid #eee7df;padding:15px 0;cursor:pointer}
-.story:hover{background:#faf8f5}
-.pill{display:inline-block;background:#f1ebe4;padding:6px 10px;border-radius:99px;font-size:12px}
-.content{white-space:pre-wrap;line-height:1.8}
-.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
-.day{background:#fff;border:1px solid #eee4da;border-radius:8px;min-height:65px;padding:8px;font-size:13px}
-.day.has{background:#eee5db}
-button:disabled{opacity:.5}
-button{font:inherit}
-#toast{position:fixed;bottom:16px;right:16px;background:#49392f;color:white;padding:12px 18px;border-radius:12px;display:none}
-.hero-number{font-family:Georgia,serif;font-size:42px;margin:10px 0;color:#49392f}
-.dashboard-grid{margin-top:22px}
-.overview-card{background:#efe7dd}
-.budget-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
-.budget-strip>div{display:flex;flex-direction:column;gap:8px}
-.budget-strip strong{font-size:20px}
-.bar-label{display:flex;justify-content:space-between;font-size:13px;margin:11px 0 5px}
-.bar-track{height:8px;background:#eee8e0;border-radius:10px;overflow:hidden}
-.bar-fill{height:100%;background:#9d8471;border-radius:10px}
+input,textarea,select{width:100%;padding:10px 12px;background:white;
+  color:var(--ink);border:1px solid var(--line);border-radius:8px}
+textarea{min-height:110px;resize:vertical}
+label{display:block;font-size:12px;color:var(--muted);margin:12px 0}
+label input,label textarea,label select{margin-top:5px}
+.divider{border:0;border-top:1px solid var(--line);margin:16px 0}
+.entry{padding:12px 0;border-bottom:1px solid var(--line)}
+.entry:last-child{border:0}
+.tag{font-size:11px;background:#f3eee8;padding:4px 8px;border-radius:20px}
+.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}
+.day{min-height:100px;border:1px solid var(--line);border-radius:9px;
+  padding:9px;background:#fcfbf9;overflow-wrap:anywhere}
+.day.today{background:#eae2d8}
+.day .date{font-size:12px;font-weight:600}
+.dot{display:block;font-size:11px;margin-top:6px;color:#765d4d}
+.quick{display:flex;gap:8px;flex-wrap:wrap}
+.quick button{border:1px solid var(--line);background:white;
+  border-radius:9px;padding:10px 13px;color:var(--ink)}
+.itemrow{display:flex;gap:9px;align-items:center;padding:8px 0;
+  border-bottom:1px solid var(--line)}
+.itemrow input[type=checkbox]{width:auto}
+.itemrow span{flex:1}
+.done{text-decoration:line-through;color:var(--muted)}
+.amount{font-family:Georgia,serif;font-size:24px}
+.pill{border:1px solid var(--line);background:white;border-radius:25px;
+  padding:7px 11px}
+.pill.selected{background:#e9e2d9}
+.content{white-space:pre-wrap;line-height:1.85}
+#notice{position:fixed;bottom:18px;right:18px;background:#40372f;
+  color:white;padding:11px 16px;border-radius:9px;display:none;
+  max-width:calc(100vw - 36px);z-index:10}
+#auth{max-width:430px;margin:65px auto}
+#auth .card{padding:28px}
+a{color:var(--accent)}
 @media(max-width:650px){
-.shell{padding:16px}
-h1{font-size:30px}
-.day{min-height:45px;padding:4px;font-size:11px}
-.budget-strip{grid-template-columns:repeat(2,minmax(0,1fr))}
-.hero-number{font-size:34px}
+  .shell{padding:14px}
+  .grid{grid-template-columns:1fr}
+  .week{gap:3px}
+  .day{min-height:76px;padding:5px;font-size:10px}
+  .dot{font-size:9px}
+  nav{margin:16px 0 22px}
+  nav button{padding:8px 10px;font-size:12px}
 }
 </style>
 </head>
 <body>
 <div class="shell">
 <header>
-<div>
-<div class="muted small">A LITTLE PLACE FOR EVERYTHING</div>
-<h1>bokchoycavitch.</h1>
-</div>
-<span class="muted small" id="dateLabel"></span>
+  <div>
+    <div class="eyebrow">Your little corner of the internet</div>
+    <h1>bokchoycavitch.</h1>
+  </div>
+  <span class="small muted" id="accountLabel"></span>
 </header>
 
-<nav class="tabs" id="tabs">
-<button data-page="home" class="active">Home</button>
-<button data-page="calendar">Calendar</button>
-<button data-page="money">Money</button>
-<button data-page="writing">Writing Room</button>
-<button data-page="settings">Settings</button>
+<section id="auth">
+  <div class="card">
+    <div class="eyebrow">Welcome home</div>
+    <h2>Your personal space.</h2>
+    <p class="muted">Sign in to keep your things together across devices.</p>
+    <form id="authForm">
+      <label>Email
+        <input id="authEmail" type="email" autocomplete="email" required>
+      </label>
+      <label>Password
+        <input id="authPassword" type="password" minlength="6"
+          autocomplete="current-password" required>
+      </label>
+      <div class="row">
+        <button class="btn primary" type="submit" id="signIn">Sign in</button>
+        <button class="btn" type="button" id="signUp">Create account</button>
+      </div>
+    </form>
+    <p class="small muted" id="authMessage"></p>
+  </div>
+</section>
+
+<div id="workspace" class="hidden">
+<nav id="nav">
+  <button class="active" data-page="home">Today</button>
+  <button data-page="calendar">Calendar</button>
+  <button data-page="things">My things</button>
+  <button data-page="spending">Spending journal</button>
+  <button data-page="settings">Settings</button>
 </nav>
 
 <main>
 <section id="home">
-<div class="row between">
-<div>
-<div class="muted small">YOUR OVERVIEW</div>
-<h2>Good to have you here.</h2>
-<p class="muted" id="homeGreeting">Your life, all in one place.</p>
-</div>
-<button class="btn" onclick="showPage('calendar')">View calendar →</button>
-</div>
+  <div class="eyebrow" id="todayDate"></div>
+  <h2 id="greeting">Good to have you here.</h2>
+  <p class="muted">A little space for whatever today brings.</p>
 
-<div class="grid dashboard-grid">
-<div class="card overview-card">
-<div class="muted small">AVAILABLE AFTER PLANNED SPENDING</div>
-<div class="hero-number" id="homeAvailable">—</div>
-<p class="muted small" id="homeBudgetNote">Set up your budget to see your monthly picture.</p>
-<button class="btn" onclick="showPage('money')">Manage budget →</button>
-</div>
+  <div class="card">
+    <div class="row between">
+      <h3>Your week</h3>
+      <button class="btn" data-go="calendar">Full calendar</button>
+    </div>
+    <div class="week" id="homeWeek"></div>
+  </div>
 
-<div class="card">
-<div class="muted small">UPCOMING</div>
-<h3>On your calendar</h3>
-<div id="upcoming" class="muted">No upcoming events yet.</div>
-</div>
+  <div class="grid">
+    <div class="card">
+      <div class="eyebrow">A little something for you</div>
+      <h3>Feeling creative?</h3>
+      <p class="muted" id="homePrompt"></p>
+      <button class="btn" id="homeWrite">Try this prompt →</button>
+      <button class="btn" id="homeShuffle">Another idea</button>
+      <p class="small muted">No deadlines. Just for fun.</p>
+    </div>
+    <div class="card">
+      <div class="eyebrow">Keep it somewhere</div>
+      <h3>My things</h3>
+      <p class="muted">Your lists, little finds, and ideas.</p>
+      <div class="quick">
+        <button data-go="things">Open my lists</button>
+        <button id="quickSave">Save something</button>
+      </div>
+    </div>
+  </div>
 
-<div class="card">
-<div class="muted small">YOUR WRITING ROOM</div>
-<h3>A little creativity</h3>
-<p class="muted" id="homeWritingStats">A fresh prompt whenever you're ready.</p>
-<button class="btn" onclick="showPage('writing')">Open Writing Room →</button>
-</div>
-</div>
-
-<div class="card">
-<div class="row between">
-<h3>This month at a glance</h3>
-<button class="btn" onclick="showPage('money')">Budget details →</button>
-</div>
-<div class="budget-strip">
-<div><span class="muted small">INCOME</span><strong id="dashIncome">—</strong></div>
-<div><span class="muted small">EXPENSES</span><strong id="dashExpenses">—</strong></div>
-<div><span class="muted small">SAVINGS</span><strong id="dashSavings">—</strong></div>
-<div><span class="muted small">GIFTS</span><strong id="dashGifts">—</strong></div>
-</div>
-</div>
+  <div class="card">
+    <div class="row between">
+      <div>
+        <div class="eyebrow">Just for you</div>
+        <h3 style="margin:0">Your private corner</h3>
+      </div>
+      <div class="quick">
+        <button data-go="spending">Spending journal ↗</button>
+        <button id="openArchive">Writing archive ↗</button>
+      </div>
+    </div>
+  </div>
 </section>
 
 <section id="calendar" class="hidden">
-<h2>Calendar</h2>
-<p class="muted">Your events and occasions, with gift planning built into birthdays.</p>
-<div class="card">
-<div class="row between">
-<button class="btn" id="prevMonth">←</button>
-<h3 id="monthTitle"></h3>
-<button class="btn" id="nextMonth">→</button>
-</div>
-<div id="calGrid" class="calendar"></div>
-</div>
-
-<div class="card">
-<h3>Bring in your iCloud calendar</h3>
-<p class="muted">Import an exported .ics calendar file to see your existing events here and on your dashboard. This is a snapshot, not automatic sync.</p>
-<label class="btn">
-Import .ics file
-<input type="file" id="icsImport" accept=".ics,text/calendar" style="display:none">
-</label>
-<p class="muted small" id="icloudStatus">Not connected · imported events stay on this device.</p>
-<details>
-<summary>About automatic iCloud sync</summary>
-<p class="muted small">Private automatic syncing and editing iCloud events need a secure server-side calendar connection, which this standalone HTML prototype does not have. Never enter your Apple ID password into this page. A public iCloud calendar subscription would expose calendar details to anyone with its link, so we are not using that as the default.</p>
-</details>
-</div>
-
-<div class="card">
-<h3>Add an occasion</h3>
-<div class="grid">
-<input id="eventName" placeholder="Event title, e.g. Mom's birthday">
-<input id="eventDate" type="date">
-<select id="eventType">
-<option value="birthday">Birthday</option>
-<option value="other">Other occasion</option>
-</select>
-</div>
-<p><button class="btn primary" id="addEvent">Add event</button></p>
-<div id="eventList"></div>
-</div>
+  <div class="eyebrow">Your days</div>
+  <h2>Calendar</h2>
+  <div class="card">
+    <div class="row between">
+      <button class="btn" id="prevWeek">← Previous</button>
+      <strong id="weekTitle"></strong>
+      <button class="btn" id="nextWeek">Next →</button>
+    </div>
+    <div class="week" id="calendarWeek" style="margin-top:15px"></div>
+  </div>
+  <div class="card">
+    <h3>Add an occasion</h3>
+    <form id="eventForm">
+      <label>Event name<input id="eventName" required></label>
+      <label>Date<input id="eventDate" type="date" required></label>
+      <label>Type
+        <select id="eventType">
+          <option value="other">Event</option>
+          <option value="birthday">Birthday</option>
+        </select>
+      </label>
+      <button class="btn primary">Save event</button>
+    </form>
+    <div id="eventsList"></div>
+  </div>
+  <div class="card">
+    <h3>iCloud Calendar</h3>
+    <p class="muted">Automatic private iCloud synchronization
+      is not connected yet. This version supports a manual
+      calendar file import.</p>
+    <label>Import an .ics calendar file
+      <input id="icsFile" type="file" accept=".ics,text/calendar">
+    </label>
+    <p class="small muted">Imported events are saved to your
+      Supabase account. Importing does not create live sync.</p>
+  </div>
 </section>
 
-<section id="money" class="hidden">
-<div class="row between">
-<div>
-<h2>Budget & money</h2>
-<p class="muted">A monthly plan that also powers your dashboard and birthday gift budgets.</p>
-</div>
-<span class="pill">Manual budget · private to this browser</span>
-</div>
+<section id="things" class="hidden">
+  <div class="eyebrow">Your personal collection</div>
+  <h2>My things</h2>
+  <p class="muted">Lists, wishes, links, and whatever else you'd like to keep.</p>
+  <div class="grid">
+    <div class="card">
+      <h3>Your lists</h3>
+      <form id="listForm" class="row">
+        <input id="listTitle" placeholder="New list name" required
+          style="flex:1;min-width:130px">
+        <button class="btn primary">Create</button>
+      </form>
+      <div id="listsMenu"></div>
+    </div>
+    <div class="card" id="listDetail">
+      <h3>Select a list</h3>
+      <p class="muted">Your saved items will appear here.</p>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Saved finds</h3>
+    <form id="savedForm">
+      <label>What would you like to save?
+        <input id="savedTitle" placeholder="An idea, product, or article" required>
+      </label>
+      <label>Link (optional)
+        <input id="savedUrl" type="url" placeholder="https://...">
+      </label>
+      <label>Note (optional)
+        <textarea id="savedNote" style="min-height:70px"></textarea>
+      </label>
+      <button class="btn primary">Save this</button>
+    </form>
+    <div id="savedList"></div>
+  </div>
+</section>
 
-<div class="grid">
-<div class="card">
-<div class="muted small">AVAILABLE AFTER PLANNED SPENDING</div>
-<div class="hero-number" id="moneyBig">$0</div>
-<p class="muted small">Income minus essentials, savings, gifts, and other spending.</p>
-</div>
-<div class="card">
-<h3>Monthly breakdown</h3>
-<div id="budgetBars"></div>
-</div>
-</div>
-
-<div class="card">
-<h3>Plan your month</h3>
-<div class="grid">
-<label>Monthly take-home income<input id="income" min="0" placeholder="0" type="number"></label>
-<label>Essential bills & expenses<input id="expenses" min="0" placeholder="0" type="number"></label>
-<label>Monthly savings goal<input id="savings" min="0" placeholder="0" type="number"></label>
-<label>Gift spending allowance<input id="gifts" min="0" placeholder="0" type="number"></label>
-<label>Groceries & everyday spending<input id="everyday" min="0" placeholder="0" type="number"></label>
-<label>Other planned spending<input id="other" min="0" placeholder="0" type="number"></label>
-</div>
-<p id="moneyResult" class="muted"></p>
-</div>
-
-<div class="card">
-<h3>Bills & recurring payments</h3>
-<div class="grid">
-<input id="billName" placeholder="Bill name, e.g. phone">
-<input id="billAmount" type="number" min="0" placeholder="Monthly amount">
-<input id="billDay" type="number" min="1" max="31" placeholder="Day of month (1–31)">
-</div>
-<p><button class="btn primary" id="addBill">Add bill</button></p>
-<div id="billList"></div>
-<p class="muted small">Bills are for planning and reminders; they aren't automatically deducted from essential expenses a second time.</p>
-</div>
+<section id="spending" class="hidden">
+  <div class="eyebrow">Private · for your eyes only</div>
+  <h2>Spending journal</h2>
+  <p class="muted">Notice where your money goes. No limits, no judgment.</p>
+  <div class="card">
+    <div class="row between">
+      <div>
+        <div class="eyebrow" id="spendingWeek"></div>
+        <h3>This week</h3>
+      </div>
+      <button class="btn" id="toggleAmounts">Show amounts</button>
+    </div>
+    <div class="amount" id="weekTotal">••••••</div>
+    <p class="muted small" id="spendingInsight"></p>
+  </div>
+  <div class="card">
+    <h3>Record a purchase</h3>
+    <form id="spendingForm">
+      <div class="grid">
+        <label>Amount<input id="purchaseAmount" type="number"
+          min="0.01" step="0.01" required></label>
+        <label>Date<input id="purchaseDate" type="date" required></label>
+      </div>
+      <label>What did you buy?
+        <input id="purchaseName" required placeholder="Coffee, groceries, etc.">
+      </label>
+      <label>Category
+        <select id="purchaseCategory">
+          <option>Food & drinks</option><option>Groceries</option>
+          <option>Shopping</option><option>Bills</option>
+          <option>Transportation</option><option>Gifts</option>
+          <option>Health</option><option>Entertainment</option>
+          <option>Other</option>
+        </select>
+      </label>
+      <label>Why did you buy it?
+        <select id="purchaseReason">
+          <option>Needed it</option><option>Wanted it</option>
+          <option>Convenience</option><option>Impulse</option>
+          <option>Treat</option><option>Other</option>
+        </select>
+      </label>
+      <label>A little note (optional)
+        <textarea id="purchaseNote" style="min-height:75px"
+          placeholder="What was going on that day?"></textarea>
+      </label>
+      <button class="btn primary">Save purchase</button>
+    </form>
+  </div>
+  <div class="card">
+    <h3>Purchase history</h3>
+    <div id="purchaseHistory"></div>
+  </div>
 </section>
 
 <section id="writing" class="hidden">
-<div class="row between">
-<div>
-<h2>The Writing Room</h2>
-<p class="muted">A new prompt, a new story, a new perspective.</p>
-</div>
-<button class="btn" id="newPrompt">New prompt</button>
-</div>
-
-<div id="writingStart">
-<div class="card">
-<div class="muted small">YOUR NEXT PROMPT</div>
-<h3 id="promptText"></h3>
-<div class="row">
-<button class="btn primary" id="startStory">Start writing</button>
-<button class="btn" id="anotherPrompt">Try another prompt</button>
-</div>
-</div>
-
-<div class="card">
-<div class="row between">
-<h3>Past writing</h3>
-<span class="muted small" id="storyCount"></span>
-</div>
-<div id="archive"></div>
-</div>
-</div>
-
-<div id="editor" class="hidden">
-<div class="card">
-<div class="row between">
-<span class="pill" id="editorMode">New story</span>
-<button class="btn" id="backToArchive">← Back</button>
-</div>
-<h3 id="editorPrompt"></h3>
-<input id="storyTitle" placeholder="Give your story a title (optional)">
-<p><textarea id="storyBody" placeholder="Begin wherever your imagination takes you..."></textarea></p>
-<div class="row between">
-<span class="muted small" id="saveStatus">Saved automatically</span>
-<span class="muted small" id="wordCount">0 words</span>
-</div>
-<p><button class="btn primary" id="finishStory">Finish for now</button></p>
-</div>
-</div>
-
-<div id="reader" class="hidden">
-<div class="card">
-<button class="btn" id="readerBack">← Past writing</button>
-<p class="muted small" id="readDate"></p>
-<h2 id="readTitle"></h2>
-<p class="muted" id="readPrompt"></p>
-<hr style="border:0;border-top:1px solid #e5ded6">
-<div class="content" id="readBody"></div>
-<p class="row">
-<button class="btn primary" id="reusePrompt">Write a NEW story with this prompt</button>
-<button class="btn" id="editStory">Edit this draft</button>
-</p>
-<p class="muted small">Writing a new story creates a separate entry. Your original remains untouched.</p>
-</div>
-</div>
+  <div class="row between">
+    <div>
+      <div class="eyebrow">Just for fun</div>
+      <h2>A little writing</h2>
+    </div>
+    <button class="btn" data-go="home">Back home</button>
+  </div>
+  <div id="writingLanding" class="card">
+    <h3 id="writingPrompt"></h3>
+    <button class="btn primary" id="startWriting">Start writing</button>
+    <button class="btn" id="changePrompt">Different prompt</button>
+    <hr class="divider">
+    <h3>Your archive</h3>
+    <div id="storyArchive"></div>
+  </div>
+  <div id="writingEditor" class="card hidden">
+    <div class="eyebrow" id="editorPrompt"></div>
+    <label>Title<input id="storyTitle" placeholder="Untitled story"></label>
+    <label>Your story<textarea id="storyBody"
+      style="min-height:340px"></textarea></label>
+    <div class="row between">
+      <span class="small muted" id="storyStatus">Not saved yet</span>
+      <button class="btn primary" id="saveStory">Save story</button>
+      <button class="btn" id="closeStory">Back to archive</button>
+    </div>
+  </div>
 </section>
 
 <section id="settings" class="hidden">
-<h2>Settings & data</h2>
-<div class="card">
-<h3>Your writing belongs to you.</h3>
-<p class="muted">This prototype stores your data locally in this browser only. It does not sync across devices, and clearing browser data can erase it. Export backups regularly.</p>
-<div class="row">
-<button class="btn primary" id="exportData">Export all data</button>
-<label class="btn" style="cursor:pointer">
-Import backup
-<input id="importData" type="file" accept="application/json" style="display:none">
-</label>
-</div>
-</div>
-<div class="card">
-<h3>Coming later</h3>
-<p>Private account sign-in, cloud sync, iCloud Calendar integration, smart gift recommendations, and writing feedback.</p>
-</div>
+  <div class="eyebrow">Your space</div>
+  <h2>Settings</h2>
+  <div class="card">
+    <h3>Your account</h3>
+    <p id="settingsEmail" class="muted"></p>
+    <p class="small muted">Your saved records are stored in
+      Supabase under your signed-in account.</p>
+    <button class="btn" id="signOut">Sign out</button>
+  </div>
+  <div class="card">
+    <h3>Your data</h3>
+    <p class="muted">Export a copy of your cloud records.
+      This is an additional backup, not automatic recovery.</p>
+    <button class="btn" id="exportAll">Export my data</button>
+  </div>
 </section>
 </main>
 </div>
+</div>
+<div id="notice" role="status"></div>
 
-<div id="toast"></div>
+<script type="module">
+import {createClient} from
+  "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
-<script>
-const KEY='myspace-prototype-v1';
-let db;
-try {
-  db=JSON.parse(localStorage.getItem(KEY))||{
-    stories:[],events:[],money:{},focus:''
-  };
-} catch {
-  db={stories:[],events:[],money:{},focus:''};
-}
-db.stories ||= [];
-db.events ||= [];
-db.money ||= {};
-db.bills ||= [];
+const URL="https://sgajmzpxfxqpaasgmuwk.supabase.co";
+const KEY="sb_publishable_rbzoxQ6vZKkRtdDMKxuGpw_aubRqn63";
+const sb=createClient(URL,KEY);
 
-function save(){
-  localStorage.setItem(KEY,JSON.stringify(db));
-}
-function $(id){
-  return document.getElementById(id);
-}
-function esc(s){
-  return String(s||'').replace(/[&<>"']/g,c=>({
-    '&':'&amp;','<':'&lt;','>':'&gt;',
-    '"':'&quot;',"'":'&#39;'
-  }[c]));
-}
-function toast(t){
-  $('toast').textContent=t;
-  $('toast').style.display='block';
-  setTimeout(()=>$('toast').style.display='none',1800);
-}
-function showPage(p){
-  document.querySelectorAll('main>section').forEach(
-    x=>x.classList.toggle('hidden',x.id!==p)
-  );
-  document.querySelectorAll('#tabs button').forEach(
-    b=>b.classList.toggle('active',b.dataset.page===p)
-  );
-  if(p==='writing')renderArchive();
-  if(p==='calendar')renderCalendar();
-  if(p==='home'){
-    renderUpcoming();
-    updateMoney();
-  }
-}
-document.querySelectorAll('#tabs button').forEach(
-  b=>b.onclick=()=>showPage(b.dataset.page)
-);
-$('dateLabel').textContent=new Date().toLocaleDateString(
-  undefined,{month:'long',day:'numeric',year:'numeric'}
-);
-
+const $=id=>document.getElementById(id);
+const escapeHTML=v=>String(v??"").replace(/[&<>"']/g,
+  c=>({"&":"&amp;","<":"&lt;",">":"&gt;",
+       '"':"&quot;","'":"&#39;"}[c]));
+const money=v=>Number(v||0).toLocaleString("en-US",
+  {style:"currency",currency:"USD"});
+const dateLocal=d=>{
+  const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,"0");
+  return `${y}-${m}-${String(d.getDate()).padStart(2,"0")}`;
+};
+const today=()=>dateLocal(new Date());
+const startOfWeek=d=>{
+  const x=new Date(d.getFullYear(),d.getMonth(),d.getDate());
+  x.setDate(x.getDate()-(x.getDay()+6)%7);
+  return x;
+};
+const addDays=(d,n)=>{
+  const x=new Date(d);x.setDate(x.getDate()+n);return x;
+};
+const notice=t=>{
+  $("notice").textContent=t;$("notice").style.display="block";
+  clearTimeout(window.noticeTimer);
+  window.noticeTimer=setTimeout(
+    ()=>$("notice").style.display="none",3500);
+};
 const prompts=[
-  "Two strangers recognize each other, but neither remembers where they met.",
-  "A letter arrives for someone who hasn't lived in the house for twenty years.",
-  "Describe a room where something important has just happened, without naming the event.",
-  "A character finds an object they were certain they had destroyed.",
-  "Write a conversation in which neither person says what they actually mean.",
-  "Someone misses the last train and discovers they aren't alone on the platform.",
-  "Write about a place that feels like home to everyone except the person who lives there.",
-  "A character receives a phone call from their own number.",
-  "Describe a goodbye without using the words goodbye, sad, or miss.",
-  "A stranger offers your character something they've secretly wanted for years.",
-  "Two siblings remember the same childhood event completely differently.",
-  "Write a scene where the weather changes the outcome of a decision."
+  "A letter arrives for someone who hasn't lived here in years.",
+  "Two strangers recognize each other but don't know why.",
+  "Write a conversation where neither person says what they mean.",
+  "Someone finds an object they thought they'd lost forever.",
+  "A missed train changes the course of someone's evening.",
+  "Describe a goodbye without using the word goodbye.",
+  "Two siblings remember the same day differently.",
+  "A character receives a phone call from their own number."
 ];
 
-let promptIndex=Number(
-  localStorage.getItem('myspace-prompt-index')||0
-)%prompts.length;
-let currentId=null,readerId=null,saveTimer;
+let user=null,lists=[],records=[],activeList=null;
+let selectedStory=null,selectedPrompt=0;
+let calendarWeek=startOfWeek(new Date());
+let amountsVisible=false,storySaveTimer=null;
 
-function setPrompt(){
-  $('promptText').textContent=prompts[promptIndex];
+function showPage(page){
+  document.querySelectorAll("main section").forEach(el=>
+    el.classList.toggle("hidden",el.id!==page));
+  document.querySelectorAll("#nav button").forEach(el=>
+    el.classList.toggle("active",el.dataset.page===page));
+  if(page==="home")renderHome();
+  if(page==="calendar")renderCalendar();
+  if(page==="things")renderThings();
+  if(page==="spending")renderSpending();
+  if(page==="writing")renderWriting();
 }
-function nextPrompt(){
-  promptIndex=(promptIndex+1)%prompts.length;
-  localStorage.setItem('myspace-prompt-index',promptIndex);
-  setPrompt();
-}
-$('newPrompt').onclick=nextPrompt;
-$('anotherPrompt').onclick=nextPrompt;
-setPrompt();
+document.querySelectorAll("[data-page]").forEach(b=>
+  b.onclick=()=>showPage(b.dataset.page));
+document.querySelectorAll("[data-go]").forEach(b=>
+  b.onclick=()=>showPage(b.dataset.go));
 
-function openEditor(prompt,id=null){
-  currentId=id||crypto.randomUUID();
-  let story=db.stories.find(s=>s.id===id);
-  if(!story){
-    story={
-      id:currentId,prompt,title:'',body:'',
-      created:new Date().toISOString(),
-      updated:new Date().toISOString(),
-      status:'draft'
-    };
-    db.stories.unshift(story);
-    save();
+function setBusy(form,busy){
+  form.querySelectorAll("button").forEach(b=>b.disabled=busy);
+}
+function requireUser(){
+  if(!user)throw Error("Please sign in again.");
+}
+async function loadData(){
+  requireUser();
+  const [a,b]=await Promise.all([
+    sb.from("lists").select("*").order("created_at"),
+    sb.from("personal_records").select("*").order("created_at")
+  ]);
+  if(a.error)throw a.error;
+  if(b.error)throw b.error;
+  lists=a.data||[];
+  records=b.data||[];
+}
+async function createList(title){
+  requireUser();
+  const {error}=await sb.from("lists").insert({
+    user_id:user.id,title,items:[]
+  });
+  if(error)throw error;
+  await loadData();renderThings();
+}
+async function updateList(id,changes){
+  requireUser();
+  const {error}=await sb.from("lists")
+    .update({...changes,updated_at:new Date().toISOString()})
+    .eq("id",id).eq("user_id",user.id);
+  if(error)throw error;
+  await loadData();renderThings();
+}
+async function removeList(id){
+  requireUser();
+  const {error}=await sb.from("lists").delete()
+    .eq("id",id).eq("user_id",user.id);
+  if(error)throw error;
+  if(activeList===id)activeList=null;
+  await loadData();renderThings();
+}
+async function createRecord(kind,data){
+  requireUser();
+  const {error}=await sb.from("personal_records")
+    .insert({user_id:user.id,kind,data});
+  if(error)throw error;
+  await loadData();refresh();
+}
+async function updateRecord(id,data){
+  requireUser();
+  const {error}=await sb.from("personal_records")
+    .update({data,updated_at:new Date().toISOString()})
+    .eq("id",id).eq("user_id",user.id);
+  if(error)throw error;
+  await loadData();refresh();
+}
+async function removeRecord(id){
+  requireUser();
+  const {error}=await sb.from("personal_records").delete()
+    .eq("id",id).eq("user_id",user.id);
+  if(error)throw error;
+  await loadData();refresh();
+}
+const byKind=k=>records.filter(r=>r.kind===k);
+function refresh(){
+  renderHome();renderCalendar();renderThings();
+  renderSpending();renderWriting();
+}
+
+async function startSession(nextUser){
+  user=nextUser;
+  $("auth").classList.toggle("hidden",!!user);
+  $("workspace").classList.toggle("hidden",!user);
+  $("accountLabel").textContent=user?"My space":"";
+  if(!user){lists=[];records=[];return;}
+  $("settingsEmail").textContent=user.email||"";
+  try{
+    await loadData();
+    refresh();
+    showPage("home");
+  }catch(e){
+    notice("Could not load cloud data: "+e.message);
   }
-  $('writingStart').classList.add('hidden');
-  $('reader').classList.add('hidden');
-  $('editor').classList.remove('hidden');
-  $('editorPrompt').textContent=story.prompt;
-  $('storyTitle').value=story.title;
-  $('storyBody').value=story.body;
-  $('editorMode').textContent=id?'Continue draft':'New story';
-  updateCount();
-  $('saveStatus').textContent='Saved automatically';
 }
-$('startStory').onclick=()=>openEditor(prompts[promptIndex]);
-
-function updateCount(){
-  $('wordCount').textContent=(
-    $('storyBody').value.trim().match(/\S+/g)||[]
-  ).length+' words';
-}
-function saveDraft(){
-  const s=db.stories.find(x=>x.id===currentId);
-  if(!s)return;
-  s.title=$('storyTitle').value;
-  s.body=$('storyBody').value;
-  s.updated=new Date().toISOString();
-  save();
-  $('saveStatus').textContent='Saved '+
-    new Date().toLocaleTimeString([],{
-      hour:'numeric',minute:'2-digit'
-    });
-}
-function changed(){
-  updateCount();
-  $('saveStatus').textContent='Saving…';
-  clearTimeout(saveTimer);
-  saveTimer=setTimeout(saveDraft,300);
-}
-$('storyTitle').oninput=changed;
-$('storyBody').oninput=changed;
-
-function closeEditor(finish=false){
-  clearTimeout(saveTimer);
-  saveDraft();
-  const s=db.stories.find(x=>x.id===currentId);
-  if(finish&&s){
-    s.status='complete';
-    save();
+$("authForm").onsubmit=async e=>{
+  e.preventDefault();
+  setBusy(e.target,true);
+  const {data,error}=await sb.auth.signInWithPassword({
+    email:$("authEmail").value.trim(),
+    password:$("authPassword").value
+  });
+  setBusy(e.target,false);
+  if(error){
+    $("authMessage").textContent=error.message;return;
   }
-  $('editor').classList.add('hidden');
-  $('writingStart').classList.remove('hidden');
-  renderArchive();
-}
-$('finishStory').onclick=()=>closeEditor(true);
-$('backToArchive').onclick=()=>closeEditor(false);
+  await startSession(data.user);
+};
+$("signUp").onclick=async()=>{
+  const email=$("authEmail").value.trim();
+  const password=$("authPassword").value;
+  if(!email||password.length<6){
+    notice("Enter your email and a password of at least 6 characters.");
+    return;
+  }
+  $("signUp").disabled=true;
+  const {data,error}=await sb.auth.signUp({
+    email,password,
+    options:{emailRedirectTo:location.origin}
+  });
+  $("signUp").disabled=false;
+  $("authMessage").textContent=error
+    ?error.message
+    :data.session
+      ?"Account created. You're signed in."
+      :"Check your email to confirm your account, then sign in.";
+  if(data.session)await startSession(data.user);
+};
+$("signOut").onclick=async()=>{
+  const {error}=await sb.auth.signOut();
+  if(error)return notice(error.message);
+  await startSession(null);
+};
+const {data:initial}=await sb.auth.getUser();
+await startSession(initial.user);
+sb.auth.onAuthStateChange((event,session)=>{
+  if(event==="SIGNED_OUT")startSession(null);
+  if(event==="SIGNED_IN"&&session?.user?.id!==user?.id)
+    startSession(session.user);
+});
 
-function renderArchive(){
-  $('storyCount').textContent=db.stories.length+' saved';
-  $('archive').innerHTML=db.stories.length
-    ?db.stories.map(s=>`
-      <div class="story" data-id="${esc(s.id)}">
-        <div class="row between">
-          <strong>${esc(s.title||'Untitled story')}</strong>
-          <span class="pill">${esc(s.status)}</span>
-        </div>
-        <p class="muted small">${esc(s.prompt)}</p>
-        <span class="muted small">
-          ${new Date(s.created).toLocaleDateString()}
-          · ${(s.body.match(/\S+/g)||[]).length} words
-        </span>
-      </div>
-    `).join('')
-    :'<p class="muted">Your stories will appear here, even unfinished ones.</p>';
-  $('archive').querySelectorAll('[data-id]').forEach(
-    el=>el.onclick=()=>openReader(el.dataset.id)
-  );
+function renderWeek(container,base){
+  const events=byKind("event");
+  container.innerHTML=Array.from({length:7},(_,i)=>{
+    const day=addDays(base,i),iso=dateLocal(day);
+    const todays=events.filter(e=>e.data.date===iso);
+    return `<div class="day ${iso===today()?"today":""}">
+      <div class="muted small">${day.toLocaleDateString("en-US",
+        {weekday:"short"})}</div>
+      <div class="date">${day.getDate()}</div>
+      ${todays.map(e=>`<span class="dot">${
+        e.data.type==="birthday"?"♡ ":""}${
+        escapeHTML(e.data.name)}</span>`).join("")}
+    </div>`;
+  }).join("");
 }
-function openReader(id){
-  readerId=id;
-  const s=db.stories.find(x=>x.id===id);
-  if(!s)return;
-  $('writingStart').classList.add('hidden');
-  $('editor').classList.add('hidden');
-  $('reader').classList.remove('hidden');
-  $('readDate').textContent=
-    new Date(s.created).toLocaleDateString()+' · '+s.status;
-  $('readTitle').textContent=s.title||'Untitled story';
-  $('readPrompt').textContent=s.prompt;
-  $('readBody').textContent=s.body||'(No writing yet)';
+function renderHome(){
+  const now=new Date(),hour=now.getHours();
+  $("todayDate").textContent=now.toLocaleDateString("en-US",
+    {weekday:"long",month:"long",day:"numeric"});
+  $("greeting").textContent=hour<12?"Good morning.":hour<17
+    ?"Good afternoon.":"Good evening.";
+  renderWeek($("homeWeek"),startOfWeek(now));
+  $("homePrompt").textContent=prompts[selectedPrompt];
 }
-$('readerBack').onclick=()=>{
-  $('reader').classList.add('hidden');
-  $('writingStart').classList.remove('hidden');
-  renderArchive();
+$("homeShuffle").onclick=()=>{
+  selectedPrompt=(selectedPrompt+1)%prompts.length;renderHome();
 };
-$('reusePrompt').onclick=()=>{
-  let s=db.stories.find(x=>x.id===readerId);
-  if(s)openEditor(s.prompt);
+$("homeWrite").onclick=()=>{
+  selectedStory=null;showPage("writing");openStory(null,
+    prompts[selectedPrompt]);
 };
-$('editStory').onclick=()=>{
-  let s=db.stories.find(x=>x.id===readerId);
-  if(s)openEditor(s.prompt,s.id);
+$("openArchive").onclick=()=>showPage("writing");
+$("quickSave").onclick=()=>{
+  showPage("things");$("savedTitle").focus();
 };
-
-let month=new Date();
-month.setDate(1);
 
 function renderCalendar(){
-  const year=month.getFullYear(),m=month.getMonth();
-  $('monthTitle').textContent=month.toLocaleDateString(
-    undefined,{month:'long',year:'numeric'}
-  );
-  const start=new Date(year,m,1).getDay();
-  const days=new Date(year,m+1,0).getDate();
-  let html=['S','M','T','W','T','F','S'].map(
-    x=>`<div class="muted small" style="text-align:center">${x}</div>`
-  ).join('');
-  for(let i=0;i<start;i++)html+='<div></div>';
-  for(let d=1;d<=days;d++){
-    let iso=`${year}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    let ev=db.events.filter(x=>x.date===iso);
-    html+=`
-      <div class="day ${ev.length?'has':''}">
-        <strong>${d}</strong>
-        ${ev.map(x=>`
-          <div class="small">
-            ${x.type==='birthday'?'🎁 ':''}${esc(x.name)}
-          </div>
-        `).join('')}
-      </div>`;
-  }
-  $('calGrid').innerHTML=html;
-  $('eventList').innerHTML=db.events.slice()
-    .sort((a,b)=>a.date.localeCompare(b.date))
-    .map(e=>`
-      <div class="story">
-        <div class="row between">
-          <span>${esc(e.name)} · ${esc(e.date)}</span>
-          <button class="btn" data-remove="${esc(e.id)}">Remove</button>
-        </div>
-        ${e.type==='birthday'?`
-          <details>
-            <summary>Gift assistant (optional)</summary>
-            <p class="muted small">
-              Set a budget and save recipient preferences.
-              Live product recommendations will be added
-              after retailer integration.
-            </p>
-            <label>Gift budget
-              <input type="number" min="0"
-                data-budget="${esc(e.id)}"
-                value="${esc(e.budget||'')}">
-            </label>
-            <label>Recipient likes / dislikes
-              <textarea style="min-height:90px"
-                data-preferences="${esc(e.id)}">${esc(e.preferences||'')}</textarea>
-            </label>
-          </details>
-        `:''}
+  $("weekTitle").textContent=
+    calendarWeek.toLocaleDateString("en-US",
+      {month:"short",day:"numeric"})+" – "+
+    addDays(calendarWeek,6).toLocaleDateString("en-US",
+      {month:"short",day:"numeric"});
+  renderWeek($("calendarWeek"),calendarWeek);
+  $("eventsList").innerHTML=byKind("event")
+    .sort((a,b)=>a.data.date.localeCompare(b.data.date))
+    .map(e=>`<div class="entry">
+      <div class="row between">
+        <span><strong>${escapeHTML(e.data.name)}</strong>
+        <span class="muted small">${escapeHTML(e.data.date)}</span></span>
+        <button class="btn" data-del-event="${e.id}">Remove</button>
       </div>
-    `).join('');
-  document.querySelectorAll('[data-remove]').forEach(
-    b=>b.onclick=()=>{
-      db.events=db.events.filter(e=>e.id!==b.dataset.remove);
-      save();
-      renderCalendar();
-      renderUpcoming();
-    }
-  );
-  document.querySelectorAll('[data-budget]').forEach(
-    i=>i.onchange=()=>{
-      const e=db.events.find(x=>x.id===i.dataset.budget);
-      e.budget=i.value;
-      save();
-    }
-  );
-  document.querySelectorAll('[data-preferences]').forEach(
-    i=>i.onchange=()=>{
-      const e=db.events.find(x=>x.id===i.dataset.preferences);
-      e.preferences=i.value;
-      save();
-    }
-  );
-}
-$('prevMonth').onclick=()=>{
-  month.setMonth(month.getMonth()-1);
-  renderCalendar();
-};
-$('nextMonth').onclick=()=>{
-  month.setMonth(month.getMonth()+1);
-  renderCalendar();
-};
-$('addEvent').onclick=()=>{
-  if(!$('eventName').value.trim()||!$('eventDate').value)
-    return toast('Add a title and date');
-  db.events.push({
-    id:crypto.randomUUID(),
-    name:$('eventName').value.trim(),
-    date:$('eventDate').value,
-    type:$('eventType').value
-  });
-  save();
-  $('eventName').value='';
-  renderCalendar();
-  renderUpcoming();
-  toast('Event saved');
-};
-function renderUpcoming(){
-  const now=new Date().toISOString().slice(0,10);
-  const next=db.events.filter(x=>x.date>=now)
-    .sort((a,b)=>a.date.localeCompare(b.date))
-    .slice(0,5);
-  $('upcoming').innerHTML=next.length
-    ?next.map(x=>`
-      <p>
-        ${x.type==='birthday'?'🎁 ':''}${esc(x.name)}
-        <span class="muted small">${esc(x.date)}</span>
-      </p>
-    `).join('')
-    :'No upcoming events. Add one in Calendar.';
-}
-
-for(const id of [
-  'income','expenses','savings','gifts','everyday','other'
-]){
-  $(id).value=db.money[id]??'';
-  $(id).oninput=()=>{
-    db.money[id]=$(id).value;
-    save();
-    updateMoney();
-  };
-}
-function currency(n){
-  return '$'+Number(n||0).toLocaleString(
-    undefined,{maximumFractionDigits:2}
-  );
-}
-function updateMoney(){
-  const n=k=>Number(db.money[k]||0);
-  const available=n('income')-
-    ['expenses','savings','gifts','everyday','other']
-      .reduce((sum,k)=>sum+n(k),0);
-  const hasData=Object.values(db.money)
-    .some(x=>x!==''&&x!=null);
-  $('moneyResult').textContent=hasData
-    ?'Monthly plan: '+currency(n('income'))+
-     ' income − '+currency(n('income')-available)+
-     ' allocated = '+currency(available)+' available.'
-    :'Enter your monthly numbers to start planning.';
-  $('moneyBig').textContent=hasData?currency(available):'—';
-  $('homeAvailable').textContent=hasData?currency(available):'—';
-  $('homeBudgetNote').textContent=hasData
-    ?(available<0
-      ?'Your planned spending exceeds income.'
-      :'Estimated monthly money not yet allocated.')
-    :'Set up your budget to see your monthly picture.';
-  for(const [id,k] of [
-    ['dashIncome','income'],
-    ['dashExpenses','expenses'],
-    ['dashSavings','savings'],
-    ['dashGifts','gifts']
-  ]){
-    $(id).textContent=hasData?currency(n(k)):'—';
-  }
-  const items=[
-    ['Essentials','expenses'],
-    ['Everyday','everyday'],
-    ['Savings','savings'],
-    ['Gifts','gifts'],
-    ['Other','other']
-  ];
-  $('budgetBars').innerHTML=items.map(([label,k])=>`
-    <div class="bar-label">
-      <span>${label}</span>
-      <strong>${currency(n(k))}</strong>
-    </div>
-    <div class="bar-track">
-      <div class="bar-fill" style="width:${
-        Math.min(100,n('income')>0
-          ?n(k)/n('income')*100:0)
-      }%"></div>
-    </div>
-  `).join('');
-}
-
-function renderBills(){
-  $('billList').innerHTML=db.bills.length
-    ?db.bills.map(b=>`
-      <div class="row between story">
-        <span>
-          <strong>${esc(b.name)}</strong>
-          · ${currency(b.amount)}
-          · day ${esc(b.day)}
-        </span>
-        <button class="btn" data-billremove="${esc(b.id)}">Remove</button>
-      </div>
-    `).join('')
-    :'<p class="muted small">No bills added yet.</p>';
-  document.querySelectorAll('[data-billremove]').forEach(
-    b=>b.onclick=()=>{
-      db.bills=db.bills.filter(x=>x.id!==b.dataset.billremove);
-      save();
-      renderBills();
-    }
-  );
-}
-$('addBill').onclick=()=>{
-  const name=$('billName').value.trim();
-  const amount=Number($('billAmount').value);
-  const day=Number($('billDay').value);
-  if(!name||!Number.isFinite(amount)||amount<0||day<1||day>31)
-    return toast('Enter a bill name, amount and valid day');
-  db.bills.push({
-    id:crypto.randomUUID(),name,amount,day
-  });
-  save();
-  ['billName','billAmount','billDay'].forEach(
-    id=>$(id).value=''
-  );
-  renderBills();
-};
-renderBills();
-
-$('homeWritingStats').textContent=db.stories.length
-  ?`${db.stories.length} saved writing ${
-    db.stories.length===1?'piece':'pieces'
-  }. Ready for another?`
-  :'A fresh prompt whenever you’re ready.';
-
-function unfoldICS(raw){
-  return raw.replace(/\r?\n[ \t]/g,'').replace(/\r/g,'');
-}
-function parseICS(raw){
-  const txt=unfoldICS(raw);
-  const blocks=txt.split('BEGIN:VEVENT').slice(1);
-  const out=[];
-  for(const block of blocks){
-    const body=block.split('END:VEVENT')[0];
-    const lines=body.split('\n');
-    const field=k=>{
-      const line=lines.find(
-        x=>x.startsWith(k+':')||x.startsWith(k+';')
-      );
-      return line
-        ?line.slice(line.indexOf(':')+1).trim()
-        :'';
-    };
-    const name=field('SUMMARY')
-      .replace(/\\n/g,' ')
-      .replace(/\\,/g,',');
-    const dt=field('DTSTART');
-    const m=dt.match(/^(\d{4})(\d{2})(\d{2})/);
-    if(!name||!m)continue;
-    const date=`${m[1]}-${m[2]}-${m[3]}`;
-    const uid=field('UID')||name+'-'+date;
-    out.push({
-      id:'ics-'+uid,
-      name,date,
-      type:/birthday|bday/i.test(name)?'birthday':'other',
-      source:'ics'
+      ${e.data.type==="birthday"?`
+      <details><summary class="small">Gift ideas & notes</summary>
+      <label>Gift notes<textarea data-gift="${e.id}">${
+        escapeHTML(e.data.giftNotes||"")}</textarea></label>
+      </details>`:""}
+    </div>`).join("");
+  document.querySelectorAll("[data-del-event]").forEach(b=>
+    b.onclick=async()=>{
+      if(!confirm("Remove this event?"))return;
+      try{await removeRecord(b.dataset.delEvent);}
+      catch(e){notice(e.message);}
     });
-  }
-  return out;
+  document.querySelectorAll("[data-gift]").forEach(t=>
+    t.onchange=async()=>{
+      const r=records.find(x=>x.id===t.dataset.gift);
+      try{await updateRecord(r.id,{...r.data,giftNotes:t.value});}
+      catch(e){notice(e.message);}
+    });
 }
-$('icsImport').onchange=async e=>{
-  const file=e.target.files?.[0];
-  if(!file)return;
+$("prevWeek").onclick=()=>{
+  calendarWeek=addDays(calendarWeek,-7);renderCalendar();
+};
+$("nextWeek").onclick=()=>{
+  calendarWeek=addDays(calendarWeek,7);renderCalendar();
+};
+$("eventDate").value=today();
+$("eventForm").onsubmit=async e=>{
+  e.preventDefault();setBusy(e.target,true);
   try{
-    const events=parseICS(await file.text());
-    if(!events.length)
-      return toast('No supported events found in this file');
-    const existing=new Map(
-      db.events.map(x=>[x.id,x])
-    );
-    events.forEach(
-      x=>existing.set(x.id,{...existing.get(x.id),...x})
-    );
-    db.events=[...existing.values()];
-    save();
-    renderCalendar();
-    renderUpcoming();
-    $('icloudStatus').textContent=
-      `Imported ${events.length} calendar events · manual snapshot only`;
-    toast('Calendar imported');
-  }catch{
-    toast('Could not read calendar file');
-  }
+    await createRecord("event",{
+      name:$("eventName").value.trim(),
+      date:$("eventDate").value,
+      type:$("eventType").value
+    });
+    e.target.reset();$("eventDate").value=today();
+    notice("Event saved to your account.");
+  }catch(err){notice(err.message);}
+  finally{setBusy(e.target,false);}
+};
+$("icsFile").onchange=async e=>{
+  const file=e.target.files[0];if(!file)return;
+  try{
+    const raw=(await file.text()).replace(/\r?\n[ \t]/g,"");
+    const chunks=raw.split("BEGIN:VEVENT").slice(1);
+    const existing=new Set(byKind("event")
+      .map(r=>r.data.importId).filter(Boolean));
+    const entries=[];
+    for(const chunk of chunks){
+      const body=chunk.split("END:VEVENT")[0];
+      const lines=body.split(/\r?\n/);
+      const field=k=>{
+        const line=lines.find(s=>s.startsWith(k+":")||
+          s.startsWith(k+";"));
+        return line?line.slice(line.indexOf(":")+1).trim():"";
+      };
+      const name=field("SUMMARY").replace(/\\,/g,",")
+        .replace(/\\n/g," ");
+      const match=field("DTSTART").match(/^(\d{4})(\d{2})(\d{2})/);
+      if(!name||!match)continue;
+      const date=`${match[1]}-${match[2]}-${match[3]}`;
+      const importId=field("UID")||name+"-"+date;
+      if(existing.has(importId))continue;
+      existing.add(importId);
+      entries.push({user_id:user.id,kind:"event",data:{
+        name,date,importId,source:"ics",
+        type:/birthday|bday/i.test(name)?"birthday":"other"
+      }});
+    }
+    if(!entries.length)return notice("No new events found.");
+    const {error}=await sb.from("personal_records").insert(entries);
+    if(error)throw error;
+    await loadData();refresh();
+    notice(`Imported ${entries.length} events to your account.`);
+  }catch(err){notice("Import failed: "+err.message);}
+  e.target.value="";
 };
 
-$('exportData').onclick=()=>{
-  const blob=new Blob([
-    JSON.stringify({
-      version:1,
-      exportedAt:new Date().toISOString(),
-      data:db
-    },null,2)
-  ],{type:'application/json'});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download='my-space-backup.json';
-  a.click();
-  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
-};
-$('importData').onchange=async e=>{
-  const f=e.target.files[0];
-  if(!f)return;
-  try{
-    const raw=JSON.parse(await f.text());
-    const d=raw.data||raw;
-    if(!Array.isArray(d.stories)||!Array.isArray(d.events))
-      throw Error('Invalid backup');
-    if(!confirm('Replace all current local data with this backup?'))
-      return;
-    db=d;
-    save();
-    location.reload();
-  }catch{
-    toast('Could not import backup');
+function renderThings(){
+  $("listsMenu").innerHTML=lists.length?lists.map(l=>`
+    <div class="entry row between">
+      <button class="btn" data-open-list="${l.id}">${
+        escapeHTML(l.title)}</button>
+      <span class="small muted">${(l.items||[]).length} items</span>
+    </div>`).join(""):'<p class="muted">No lists yet.</p>';
+  document.querySelectorAll("[data-open-list]").forEach(b=>
+    b.onclick=()=>{activeList=b.dataset.openList;renderThings();});
+  const list=lists.find(l=>l.id===activeList);
+  if(!list){
+    $("listDetail").innerHTML="<h3>Select a list</h3><p class='muted'>Or create a new one.</p>";
+  }else{
+    $("listDetail").innerHTML=`
+      <div class="row between"><h3>${escapeHTML(list.title)}</h3>
+      <button class="btn" id="deleteList">Delete list</button></div>
+      <form id="addListItem" class="row">
+        <input id="newListItem" placeholder="Add an item"
+          style="flex:1;min-width:130px" required>
+        <button class="btn primary">Add</button>
+      </form>
+      <div id="listItems">${(list.items||[]).map((item,i)=>`
+        <div class="itemrow">
+          <input type="checkbox" data-check="${i}" ${
+            item.done?"checked":""}>
+          <span class="${item.done?"done":""}">${
+            escapeHTML(item.text)}</span>
+          <button class="btn" data-del-item="${i}">×</button>
+        </div>`).join("")}</div>
+      <div class="row" style="margin-top:15px">
+        <button class="btn" id="copyList">Copy list</button>
+        <button class="btn" id="textList">Text list</button>
+      </div>`;
+    $("addListItem").onsubmit=async e=>{
+      e.preventDefault();
+      const value=$("newListItem").value.trim();if(!value)return;
+      try{await updateList(list.id,{items:[
+        ...(list.items||[]),{text:value,done:false}
+      ]});}catch(err){notice(err.message);}
+    };
+    document.querySelectorAll("[data-check]").forEach(c=>
+      c.onchange=async()=>{
+        const items=structuredClone(list.items||[]);
+        items[Number(c.dataset.check)].done=c.checked;
+        try{await updateList(list.id,{items});}
+        catch(err){notice(err.message);}
+      });
+    document.querySelectorAll("[data-del-item]").forEach(b=>
+      b.onclick=async()=>{
+        const items=(list.items||[]).filter((_,i)=>
+          i!==Number(b.dataset.delItem));
+        try{await updateList(list.id,{items});}
+        catch(err){notice(err.message);}
+      });
+    $("deleteList").onclick=async()=>{
+      if(!confirm("Delete this list and all its items?"))return;
+      try{await removeList(list.id);}
+      catch(err){notice(err.message);}
+    };
+    const listText=()=>`${list.title}\n\n`+
+      (list.items||[]).filter(i=>!i.done)
+      .map(i=>"• "+i.text).join("\n");
+    $("copyList").onclick=async()=>{
+      try{await navigator.clipboard.writeText(listText());
+        notice("Copied!");}
+      catch{notice("Copy unavailable on this device.");}
+    };
+    $("textList").onclick=()=>{
+      location.href="sms:?&body="+encodeURIComponent(listText());
+    };
   }
+  $("savedList").innerHTML=byKind("saved").map(r=>`
+    <div class="entry row between">
+      <div><strong>${escapeHTML(r.data.title)}</strong>
+      ${r.data.url?`<div><a href="${escapeHTML(r.data.url)}"
+        target="_blank" rel="noopener noreferrer">Open link</a></div>`:""}
+      <div class="muted small">${escapeHTML(r.data.note)}</div></div>
+      <button class="btn" data-del-saved="${r.id}">Remove</button>
+    </div>`).join("");
+  document.querySelectorAll("[data-del-saved]").forEach(b=>
+    b.onclick=async()=>{
+      if(!confirm("Remove this saved item?"))return;
+      try{await removeRecord(b.dataset.delSaved);}
+      catch(err){notice(err.message);}
+    });
+}
+$("listForm").onsubmit=async e=>{
+  e.preventDefault();setBusy(e.target,true);
+  try{
+    await createList($("listTitle").value.trim());
+    $("listTitle").value="";
+    activeList=lists[lists.length-1]?.id;
+    renderThings();notice("List saved to the cloud.");
+  }catch(err){notice(err.message);}
+  finally{setBusy(e.target,false);}
+};
+$("savedForm").onsubmit=async e=>{
+  e.preventDefault();setBusy(e.target,true);
+  try{
+    await createRecord("saved",{
+      title:$("savedTitle").value.trim(),
+      url:$("savedUrl").value.trim(),
+      note:$("savedNote").value.trim()
+    });
+    e.target.reset();notice("Saved to your collection.");
+  }catch(err){notice(err.message);}
+  finally{setBusy(e.target,false);}
 };
 
-renderArchive();
-renderCalendar();
-renderUpcoming();
-updateMoney();
+$("purchaseDate").value=today();
+function renderSpending(){
+  const start=startOfWeek(new Date()),end=addDays(start,7);
+  const from=dateLocal(start),to=dateLocal(end);
+  const purchases=byKind("spending");
+  const weekly=purchases.filter(r=>
+    r.data.date>=from&&r.data.date<to);
+  const total=weekly.reduce((n,r)=>n+Number(r.data.amount||0),0);
+  $("spendingWeek").textContent="Week of "+
+    start.toLocaleDateString("en-US",{month:"short",day:"numeric"});
+  $("weekTotal").textContent=amountsVisible?money(total):"••••••";
+  $("toggleAmounts").textContent=amountsVisible
+    ?"Hide amounts":"Show amounts";
+  const counts={};
+  weekly.forEach(r=>counts[r.data.category]=
+    (counts[r.data.category]||0)+Number(r.data.amount));
+  const top=Object.entries(counts).sort((a,b)=>b[1]-a[1])[0];
+  $("spendingInsight").textContent=weekly.length
+    ?`${weekly.length} purchases recorded this week.${
+      top?" Your largest category so far is "+top[0]+".":""}`
+    :"Nothing recorded this week. No pressure.";
+  $("purchaseHistory").innerHTML=purchases.slice()
+    .sort((a,b)=>b.data.date.localeCompare(a.data.date))
+    .map(r=>`<div class="entry row between">
+      <div><strong>${escapeHTML(r.data.name)}</strong>
+      <div class="small muted">${escapeHTML(r.data.date)}
+      · ${escapeHTML(r.data.category)}
+      · ${escapeHTML(r.data.reason)}</div>
+      ${r.data.note?`<div class="small muted">${
+        escapeHTML(r.data.note)}</div>`:""}</div>
+      <div class="row">
+        <strong>${amountsVisible?money(r.data.amount):"••••"}</strong>
+        <button class="btn" data-del-purchase="${r.id}">×</button>
+      </div>
+    </div>`).join("");
+  document.querySelectorAll("[data-del-purchase]").forEach(b=>
+    b.onclick=async()=>{
+      if(!confirm("Delete this purchase?"))return;
+      try{await removeRecord(b.dataset.delPurchase);}
+      catch(err){notice(err.message);}
+    });
+}
+$("toggleAmounts").onclick=()=>{
+  amountsVisible=!amountsVisible;renderSpending();
+};
+$("spendingForm").onsubmit=async e=>{
+  e.preventDefault();setBusy(e.target,true);
+  try{
+    await createRecord("spending",{
+      amount:Number($("purchaseAmount").value),
+      date:$("purchaseDate").value,
+      name:$("purchaseName").value.trim(),
+      category:$("purchaseCategory").value,
+      reason:$("purchaseReason").value,
+      note:$("purchaseNote").value.trim()
+    });
+    e.target.reset();$("purchaseDate").value=today();
+    notice("Purchase recorded.");
+  }catch(err){notice(err.message);}
+  finally{setBusy(e.target,false);}
+};
+
+function renderWriting(){
+  $("writingPrompt").textContent=prompts[selectedPrompt];
+  $("storyArchive").innerHTML=byKind("story").slice().reverse()
+    .map(r=>`<div class="entry row between">
+      <div><strong>${escapeHTML(r.data.title||"Untitled story")}</strong>
+      <div class="small muted">${escapeHTML(r.data.prompt)}</div></div>
+      <button class="btn" data-story="${r.id}">Open</button>
+    </div>`).join("")||"<p class='muted'>Your stories will live here.</p>";
+  document.querySelectorAll("[data-story]").forEach(b=>
+    b.onclick=()=>{
+      const r=records.find(x=>x.id===b.dataset.story);
+      if(r)openStory(r,r.data.prompt);
+    });
+}
+function openStory(record,prompt){
+  selectedStory=record?.id||null;
+  $("writingLanding").classList.add("hidden");
+  $("writingEditor").classList.remove("hidden");
+  $("editorPrompt").textContent=prompt;
+  $("storyTitle").value=record?.data.title||"";
+  $("storyBody").value=record?.data.body||"";
+  $("storyStatus").textContent=record
+    ?"Saved story — changes not yet saved":"New story — not saved yet";
+}
+$("startWriting").onclick=()=>openStory(null,prompts[selectedPrompt]);
+$("changePrompt").onclick=()=>{
+  selectedPrompt=(selectedPrompt+1)%prompts.length;renderWriting();
+};
+function closeWriting(){
+  $("writingEditor").classList.add("hidden");
+  $("writingLanding").classList.remove("hidden");
+  renderWriting();
+}
+async function saveCurrentStory(){
+  const data={
+    title:$("storyTitle").value.trim(),
+    body:$("storyBody").value,
+    prompt:$("editorPrompt").textContent
+  };
+  if(selectedStory)await updateRecord(selectedStory,data);
+  else{
+    await createRecord("story",data);
+    selectedStory=byKind("story").at(-1)?.id||null;
+  }
+  $("storyStatus").textContent="Saved to your account.";
+}
+$("saveStory").onclick=async()=>{
+  $("saveStory").disabled=true;
+  try{await saveCurrentStory();notice("Story saved.");}
+  catch(e){notice(e.message);}
+  finally{$("saveStory").disabled=false;}
+};
+$("closeStory").onclick=()=>{
+  if($("storyStatus").textContent.includes("not yet saved")||
+     $("storyStatus").textContent.includes("Unsaved")){
+    if(!confirm("Leave without saving your changes?"))return;
+  }
+  closeWriting();
+};
+["storyTitle","storyBody"].forEach(id=>{
+  $(id).oninput=()=>{
+    $("storyStatus").textContent="Unsaved changes";
+  };
+});
+
+$("exportAll").onclick=()=>{
+  const payload={
+    exported_at:new Date().toISOString(),
+    lists,records
+  };
+  const blob=new Blob([JSON.stringify(payload,null,2)],
+    {type:"application/json"});
+  const link=document.createElement("a");
+  link.href=URL.createObjectURL(blob);
+  link.download="bokchoycavitch-backup.json";
+  link.click();
+  setTimeout(()=>URL.revokeObjectURL(link.href),1000);
+};
 </script>
 </body>
 </html>
